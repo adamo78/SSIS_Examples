@@ -1,25 +1,25 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="6/3/2022 12:25:06 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="ADAM-DELL"
   DTS:CreatorName="ADAM-DELL\adamo"
-  DTS:DTSID="{E6807E64-EE49-4FC4-B777-B31E3CA069B3}"
+  DTS:DTSID="{A56B4568-FAE1-40E5-9EB4-6DDCB80315AA}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.2000.180"
   DTS:LocaleID="2057"
   DTS:ObjectName="02_More_Transforms"
   DTS:PackageType="5"
   DTS:VersionBuild="26"
-  DTS:VersionGUID="{A72D490D-B88E-4D32-B1C9-4E2C509AC5F4}">
+  DTS:VersionGUID="{C518151C-72D2-4283-9ADC-9C48B1E0A1F0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{8CB8EED8-4291-4D52-9FCE-45A77E8B2363}"
+      DTS:DTSID="{47CC7B93-264B-4870-9464-FF1F4A3CAB63}"
       DTS:ObjectName="LocalHost.SampleWarehouse">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -31,7 +31,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[summary_output]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{D5C81676-DCFC-4837-92FE-1DBB560E1818}"
+      DTS:DTSID="{C76EFD06-6CE9-4B68-8DEB-211813A1B88A}"
       DTS:ObjectName="summary_output">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -51,7 +51,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="roll_no"
-              DTS:DTSID="{80C3FC68-DE07-4BBC-B0E3-4D3246B0675C}"
+              DTS:DTSID="{A7368DFE-0AFC-483B-8A9A-1A7DCFBD6224}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -59,7 +59,7 @@
               DTS:DataType="21"
               DTS:TextQualified="True"
               DTS:ObjectName="score"
-              DTS:DTSID="{A5AA08B0-78B9-4A64-9ACC-508633EB42BE}"
+              DTS:DTSID="{A4E1D194-C941-43F5-9684-5F9B59DFC0A4}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -68,7 +68,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[txt_input]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{96479EB6-03C7-4C73-A7F6-0D878253916B}"
+      DTS:DTSID="{EC7A272C-5AEA-42A8-85BD-D4B3D32892B2}"
       DTS:ObjectName="txt_input">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -88,7 +88,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="ref "
-              DTS:DTSID="{3C55AF9D-4918-4A63-BF81-F079DC744714}"
+              DTS:DTSID="{681BF63B-FBA7-4C87-9BB8-8C0F26BD2F4D}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -97,7 +97,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName=" roll_no "
-              DTS:DTSID="{C42D2CB3-23C9-4758-BD29-6C628DFC5478}"
+              DTS:DTSID="{9CBC6C0D-CB68-4554-9BA4-4DD7D60CFB48}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -106,7 +106,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName=" score"
-              DTS:DTSID="{CCC7E227-E8F4-4B35-A3BB-53BB89E1FA39}"
+              DTS:DTSID="{2005A327-AE6A-4691-8BD1-58629D8FA03B}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -116,7 +116,7 @@
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{42018115-FA7A-4941-8EBF-B8AC223F700B}"
+      DTS:DTSID="{38D8DE22-9AC2-403C-9401-4FA68225271A}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RecordsInSource">
@@ -125,7 +125,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{9217AFDA-DB7F-4E3A-8A74-01E66AF125AB}"
+      DTS:DTSID="{08DFEABE-A4B4-43DD-83BC-2F22BAA1CD20}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RecordsInSummary">
@@ -134,7 +134,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{306CDAC9-36D3-4E10-AF32-433A0407A32C}"
+      DTS:DTSID="{01E46BBD-1505-45DC-A374-D39D754F3FE9}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RecordsUploaded">
@@ -147,7 +147,7 @@
       DTS:refId="Package\Log completion"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{167428C1-D955-44FB-AAB3-E961300BD10F}"
+      DTS:DTSID="{BC46B414-4A69-4EA9-A564-4A4A3DA5314D}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Log completion"
@@ -156,7 +156,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{8CB8EED8-4291-4D52-9FCE-45A77E8B2363}"
+          SQLTask:Connection="{47CC7B93-264B-4870-9464-FF1F4A3CAB63}"
           SQLTask:SqlStatementSource="INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) &#xA;VALUES &#xA;&#x9;('2.1','Records in source',?),&#xA;&#x9;('2.2','Records uploaded',?),&#xA;&#x9;('2.3','Records in summary',?),&#xA;&#x9;('2.4','Complete',null);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -183,7 +183,7 @@
       DTS:refId="Package\Upload scores txt file to DW and output summary to txt file"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{90c0fa69-bf4b-4c95-aa8f-a1fabd6c1c38}"
+      DTS:DTSID="{7A274713-4F6C-465D-86AE-0D26CA9E2626}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Upload scores txt file to DW and output summary to txt file"
@@ -1168,7 +1168,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{44EF8AB3-B0FE-4C48-AA17-93471D91C31E}"
+      DTS:DTSID="{3BCD522B-C095-4DBF-8C16-BEBBA96057A5}"
       DTS:From="Package\Upload scores txt file to DW and output summary to txt file"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"

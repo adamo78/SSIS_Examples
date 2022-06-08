@@ -1,25 +1,25 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="6/3/2022 12:49:13 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="ADAM-DELL"
   DTS:CreatorName="ADAM-DELL\adamo"
-  DTS:DTSID="{B7128D83-EC89-4E77-A1F1-287E9D8C69AE}"
+  DTS:DTSID="{D6AF0B09-0C2E-4B9E-A237-4771F03176A4}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.2000.180"
   DTS:LocaleID="2057"
   DTS:ObjectName="05_Caching"
   DTS:PackageType="5"
   DTS:VersionBuild="5"
-  DTS:VersionGUID="{2E65CDCA-C960-43BA-AB12-5DAB4E2BB3A8}">
+  DTS:VersionGUID="{1504D684-79F7-47C3-BAA6-56113DE57714}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Cache Connection Manager]"
       DTS:CreationName="CACHE"
-      DTS:DTSID="{1AE97BA8-544E-49E6-A4F0-F17C1B7F3B8C}"
+      DTS:DTSID="{367BE826-B3EA-4F70-A9C6-9FA89920068E}"
       DTS:ObjectName="Cache Connection Manager">
       <DTS:ObjectData>
         <DTS:ConnectionManager>
@@ -27,7 +27,7 @@
             <DTS:CacheColumn
               DTS:DataType="3"
               DTS:ObjectName="teams_id"
-              DTS:DTSID="{F4E946A6-784F-4459-9791-3A56D5D216F7}"
+              DTS:DTSID="{ACEB8AC0-A4B8-4813-A587-39881A974ED6}"
               DTS:CreationName="" />
             <DTS:CacheColumn
               DTS:DataType="129"
@@ -35,7 +35,7 @@
               DTS:CodePage="1252"
               DTS:IndexPosition="1"
               DTS:ObjectName="team_name"
-              DTS:DTSID="{16509623-3B2F-4611-9B38-D55BCA474B86}"
+              DTS:DTSID="{DB14B3C3-DB47-4663-B282-335951703EAC}"
               DTS:CreationName="" />
           </DTS:CacheColumns>
         </DTS:ConnectionManager>
@@ -44,7 +44,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
       DTS:CreationName="EXCEL"
-      DTS:DTSID="{8ACD6C30-8994-49DD-B0FD-0E08DE350E50}"
+      DTS:DTSID="{4A5BC0AA-AA9E-4AA4-A10F-EBC37910E1FF}"
       DTS:ObjectName="Excel Connection Manager">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -56,7 +56,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{D66B941F-FA42-462F-9CAE-A44FD004FB7D}"
+      DTS:DTSID="{DA07030D-6B1D-450F-B213-0F1391F634A2}"
       DTS:ObjectName="LocalHost.SampleWarehouse">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -69,7 +69,7 @@
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{7B8BDF73-C713-4A89-BE0F-B0892F57572C}"
+      DTS:DTSID="{1410411B-BB7D-4C0A-9FFB-DCECF5F28946}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RecordCount">
@@ -78,7 +78,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{55D7B941-BDAC-4A17-AFA4-65C95B764130}"
+      DTS:DTSID="{FF4E94C8-C7A4-4FBE-A031-1CB00759523B}"
       DTS:EvaluateAsExpression="True"
       DTS:Expression="&quot;INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) VALUES ('5','Insert rows from: Example_Data1.xls', &quot; + (DT_WSTR, 4) @[User::RecordCount] + &quot;)&quot;"
       DTS:IncludeInDebugDump="2345"
@@ -89,7 +89,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{9C4D14C3-6C58-4858-8F45-26E52B9CE052}"
+      DTS:DTSID="{7EFAE1C8-385A-4EB3-984F-2AA82F3A08CE}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="UnknownTeamID">
@@ -102,7 +102,7 @@
       DTS:refId="Package\Cache teams table"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{b1d0a336-c190-4349-bf7c-0566bd82936d}"
+      DTS:DTSID="{419F54F3-737B-4A57-B09F-42FFCF6BADC2}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Cache teams table"
@@ -323,7 +323,7 @@
       DTS:refId="Package\Log row count"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{abd69a3a-58cb-46cf-8f09-a0e4103023cc}"
+      DTS:DTSID="{F8D476E3-438B-4E89-9566-62FB995F23CF}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Log row count"
@@ -332,7 +332,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{D66B941F-FA42-462F-9CAE-A44FD004FB7D}"
+          SQLTask:Connection="{DA07030D-6B1D-450F-B213-0F1391F634A2}"
           SQLTask:SqlStmtSourceType="Variable"
           SQLTask:SqlStatementSource="User::SSISlog_string" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
@@ -341,7 +341,7 @@
       DTS:refId="Package\Upload excel example 1"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{c2dd8e07-2e4e-4cf1-9a2f-afc4ef14849a}"
+      DTS:DTSID="{6C18FB00-7ECD-4660-940A-D431AF1CCF30}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Upload excel example 1"
@@ -1499,7 +1499,7 @@ where [refTable].[team_name] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{25f6efb1-4170-4006-abbb-1afa2b590bc9}"
+      DTS:DTSID="{06C6C1E3-C35E-4475-AB62-8A6F4132C505}"
       DTS:From="Package\Upload excel example 1"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -1507,7 +1507,7 @@ where [refTable].[team_name] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{835ac372-938f-4f61-adc6-58a781bd04b0}"
+      DTS:DTSID="{58550500-5D55-4D61-A40B-4C9A42ADDE27}"
       DTS:From="Package\Cache teams table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"

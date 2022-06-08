@@ -1,25 +1,25 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="6/3/2022 12:08:15 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="ADAM-DELL"
   DTS:CreatorName="ADAM-DELL\adamo"
-  DTS:DTSID="{4334A5C4-5557-44D5-836D-DB8DABFA2936}"
+  DTS:DTSID="{9E81F7D2-600C-4A6C-BF65-B713CD34386D}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.2000.180"
   DTS:LocaleID="2057"
   DTS:ObjectName="00_Execute_Packages"
   DTS:PackageType="5"
   DTS:VersionBuild="17"
-  DTS:VersionGUID="{95DC3F95-E371-41C9-AE2F-3D13F403F470}">
+  DTS:VersionGUID="{A6A12D14-DE1D-4FAD-9CBE-578B3FDBC5C6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{B148A2AB-93DF-4C4F-8A3D-31D01FE9DD0E}"
+      DTS:DTSID="{41641547-17F6-4052-A67B-10572FFBFE0E}"
       DTS:ObjectName="LocalHost.SampleWarehouse">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -35,7 +35,7 @@
       DTS:refId="Package\Execute Package 01"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
-      DTS:DTSID="{DAC8248F-701F-4BB7-BDC3-916BA1A90939}"
+      DTS:DTSID="{7951B930-7878-4856-B7D8-AF9B4B6044EC}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute Package 01"
@@ -52,7 +52,7 @@
       DTS:refId="Package\Execute Package 02"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
-      DTS:DTSID="{6F4860F2-D872-4126-A1B5-B01CBAA62C29}"
+      DTS:DTSID="{C4F9CC1A-C92C-4499-8DF8-21B93F8B862B}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute Package 02"
@@ -69,7 +69,7 @@
       DTS:refId="Package\Execute Package 03"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
-      DTS:DTSID="{CE4052CB-640C-460D-8644-1B736906181D}"
+      DTS:DTSID="{12C89A0F-38AA-48B9-AC91-D592F9B3E40F}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute Package 03"
@@ -86,7 +86,7 @@
       DTS:refId="Package\Execute Package 04"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
-      DTS:DTSID="{E40F551A-A045-41CE-BCF4-5153F597400B}"
+      DTS:DTSID="{1EBC0730-672E-4695-9FCC-92F849CA9A29}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute Package 04"
@@ -103,7 +103,7 @@
       DTS:refId="Package\Execute Package 05"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
-      DTS:DTSID="{9D7ACA42-4A12-4E97-9DFB-9797965E76B1}"
+      DTS:DTSID="{C48C4061-0C7E-45C8-B015-D62821B0BF49}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute Package 05"
@@ -120,7 +120,7 @@
       DTS:refId="Package\Execute Package 06"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
-      DTS:DTSID="{890166B9-6651-41A8-A904-A0C5CA6F3E26}"
+      DTS:DTSID="{324D7363-3B7B-470D-938C-E746C22EC202}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute Package 06"
@@ -137,7 +137,7 @@
       DTS:refId="Package\Execute Package 07"
       DTS:CreationName="Microsoft.ExecutePackageTask"
       DTS:Description="Execute Package Task"
-      DTS:DTSID="{066DEA69-A6E4-47F1-8262-BD6D8D22AE89}"
+      DTS:DTSID="{3377D99C-0375-40F0-B764-C0054251A7E2}"
       DTS:ExecutableType="Microsoft.ExecutePackageTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Execute Package 07"
@@ -154,7 +154,7 @@
       DTS:refId="Package\Truncate DW Tables"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{BF802BA1-4F85-445D-8187-014C8F1F7920}"
+      DTS:DTSID="{EBE2C3F8-6189-429C-A951-E36FBC1535DC}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Truncate DW Tables"
@@ -163,7 +163,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{B148A2AB-93DF-4C4F-8A3D-31D01FE9DD0E}"
+          SQLTask:Connection="{41641547-17F6-4052-A67B-10572FFBFE0E}"
           SQLTask:TimeOut="30"
           SQLTask:SqlStatementSource="TRUNCATE TABLE [datamart].[marks];&#xA;TRUNCATE TABLE [audit].[marks];&#xA;TRUNCATE TABLE [audit].[SSISlog];&#xA;TRUNCATE TABLE [datamart].[teams];&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
@@ -173,7 +173,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{78CE9C72-A255-4C0D-A660-3D92A3DB79FC}"
+      DTS:DTSID="{78F187C5-B0B5-4E6D-9367-71C785DABDA8}"
       DTS:From="Package\Truncate DW Tables"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -181,7 +181,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{6E542FEF-59DA-436A-90F4-107F69C55EBA}"
+      DTS:DTSID="{7AD5B5EA-0F6A-4619-A60E-E04CFBF096D0}"
       DTS:From="Package\Execute Package 01"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
@@ -189,7 +189,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
       DTS:CreationName=""
-      DTS:DTSID="{90AAABE7-399E-43DE-AE68-9381332E3D41}"
+      DTS:DTSID="{71E7FE9A-265C-48BB-A891-9B7825187BFB}"
       DTS:From="Package\Execute Package 02"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 2"
@@ -197,7 +197,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
-      DTS:DTSID="{9EE76DAD-2E12-46AE-A79B-116A3D00B42A}"
+      DTS:DTSID="{E63D6994-BFBD-4639-A63A-BCA62826190E}"
       DTS:From="Package\Execute Package 03"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 3"
@@ -205,7 +205,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
       DTS:CreationName=""
-      DTS:DTSID="{0A9740A9-389C-469A-AD6D-59601B73F008}"
+      DTS:DTSID="{8948F974-0F58-4FD9-B45B-2B569EA3D4E4}"
       DTS:From="Package\Execute Package 04"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 4"
@@ -213,7 +213,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
       DTS:CreationName=""
-      DTS:DTSID="{9269B262-2A8B-4BF1-9832-3F24C468E510}"
+      DTS:DTSID="{330DEB93-B898-478A-BA86-83407A9F6E84}"
       DTS:From="Package\Execute Package 05"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 5"
@@ -221,7 +221,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
       DTS:CreationName=""
-      DTS:DTSID="{873E7492-0277-42DF-8469-7A2E5E172565}"
+      DTS:DTSID="{42D46AFB-053D-46B7-B771-89B67CBB3351}"
       DTS:From="Package\Execute Package 06"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 6"

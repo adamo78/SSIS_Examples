@@ -1,25 +1,25 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
   DTS:refId="Package"
   DTS:CreationDate="6/3/2022 12:13:26 PM"
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="ADAM-DELL"
   DTS:CreatorName="ADAM-DELL\adamo"
-  DTS:DTSID="{6ADF30D7-09C9-41FA-AFE4-1122EC4A4F50}"
+  DTS:DTSID="{F0C8BFB4-898A-48CB-9F45-BA072118670A}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="15.0.2000.180"
   DTS:LocaleID="2057"
   DTS:ObjectName="01_Basic_Transforms"
   DTS:PackageType="5"
   DTS:VersionBuild="42"
-  DTS:VersionGUID="{2F7CA12F-19EC-4EA7-BA0A-E5EDE2EA4FCA}">
+  DTS:VersionGUID="{266EACA6-67A6-4565-AFA6-EF02B5E936E4}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[Example_Data1_csv_input]"
       DTS:CreationName="FLATFILE"
-      DTS:DTSID="{2604D2D9-571D-4A1B-B737-8B9ECD5EF475}"
+      DTS:DTSID="{218B85E9-C66F-480C-A22C-784F102C1F62}"
       DTS:ObjectName="Example_Data1_csv_input">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -39,7 +39,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="roll_number"
-              DTS:DTSID="{649BB4BA-526C-4A6B-92CB-17E087D72D17}"
+              DTS:DTSID="{9F6EF84E-06C4-4E3B-A4F5-22729A99C013}"
               DTS:CreationName="" />
             <DTS:FlatFileColumn
               DTS:ColumnType="Delimited"
@@ -48,7 +48,7 @@
               DTS:DataType="129"
               DTS:TextQualified="True"
               DTS:ObjectName="marks"
-              DTS:DTSID="{19492657-0F09-43F9-A3BA-F1BB11EE1F6F}"
+              DTS:DTSID="{3C588E35-FC7D-492A-AB00-3C9CF2F7D010}"
               DTS:CreationName="" />
           </DTS:FlatFileColumns>
         </DTS:ConnectionManager>
@@ -57,7 +57,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{B21C66CA-5A4F-4DD7-AF82-3A18336C89A1}"
+      DTS:DTSID="{3EFC3147-BCC5-434E-BB4A-7B067E4AA690}"
       DTS:ObjectName="LocalHost.SampleWarehouse">
       <DTS:ObjectData>
         <DTS:ConnectionManager
@@ -69,7 +69,7 @@
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
       DTS:CreationName="SMTP"
-      DTS:DTSID="{0D281D15-F9C2-419F-A90E-15F42A568680}"
+      DTS:DTSID="{047C152F-637F-4EDC-8D45-C370E0B5D08E}"
       DTS:ObjectName="SMTP Connection Manager">
       <DTS:ObjectData>
         <SmtpConnectionManager
@@ -81,7 +81,7 @@
   <DTS:Variables>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{BE80B659-E967-4746-9721-B1442BDC67E8}"
+      DTS:DTSID="{D9ED74CE-C181-4E15-A757-BE23678E9044}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="Detentions">
@@ -90,7 +90,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{664BCEF7-FCCC-40D7-B98F-09576A42C031}"
+      DTS:DTSID="{292B614D-E3EE-4F2A-8013-DBB7D0D52243}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RecordsInSource">
@@ -99,7 +99,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{D634041E-4C88-4A33-9B04-10031D7C8060}"
+      DTS:DTSID="{2D2C0132-780F-4F41-A871-D734D85F8633}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RecordsUpdated">
@@ -108,7 +108,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{B34DC757-D4AF-41A0-9A0D-DD05927BAEAC}"
+      DTS:DTSID="{7BC081F6-1CE7-46C1-8824-EA1EBE120DC4}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="RecordsUploaded">
@@ -117,7 +117,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{7F136887-44CD-477A-B9D2-AC69EA117B78}"
+      DTS:DTSID="{C38ECE77-C332-4365-B246-5D7081325CA1}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="ReSits">
@@ -126,7 +126,7 @@
     </DTS:Variable>
     <DTS:Variable
       DTS:CreationName=""
-      DTS:DTSID="{D045A559-E3D1-4158-9CF8-255729B63546}"
+      DTS:DTSID="{BD461F8C-0482-4D3E-8B7E-4828C6650D30}"
       DTS:IncludeInDebugDump="6789"
       DTS:Namespace="User"
       DTS:ObjectName="Uncommented">
@@ -139,7 +139,7 @@
       DTS:refId="Package\Log completion"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{9F0E4B04-725E-4F45-A9AF-F85FC8EC863D}"
+      DTS:DTSID="{0A5E1E52-353D-4FDB-B967-039A60B7ECF5}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Log completion"
@@ -148,7 +148,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{B21C66CA-5A4F-4DD7-AF82-3A18336C89A1}"
+          SQLTask:Connection="{3EFC3147-BCC5-434E-BB4A-7B067E4AA690}"
           SQLTask:SqlStatementSource="INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) &#xA;VALUES &#xA;&#x9;('1.1','Records In Source',?),&#xA;&#x9;('1.2','Re-sits',?),&#xA;&#x9;('1.3','Detentions',?),&#xA;&#x9;('1.4','Uncommented',?),&#xA;&#x9;('1.5','Records Uploaded',?),&#xA;&#x9;('1.6','Records Updated',?),&#xA;&#x9;('1.7','Complete',null);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
           <SQLTask:ParameterBinding
             SQLTask:ParameterName="0"
@@ -193,7 +193,7 @@
       DTS:refId="Package\Update a records in marks table"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
       DTS:Description="Execute SQL Task"
-      DTS:DTSID="{fe74891d-5f25-42a1-bdf2-2ec1214cdd42}"
+      DTS:DTSID="{DB8E4195-0658-4541-BA3C-A966ACB87182}"
       DTS:ExecutableType="Microsoft.ExecuteSQLTask"
       DTS:LocaleID="-1"
       DTS:ObjectName="Update a records in marks table"
@@ -202,7 +202,7 @@
       <DTS:Variables />
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
-          SQLTask:Connection="{B21C66CA-5A4F-4DD7-AF82-3A18336C89A1}"
+          SQLTask:Connection="{3EFC3147-BCC5-434E-BB4A-7B067E4AA690}"
           SQLTask:TimeOut="30"
           SQLTask:SqlStatementSource="UPDATE [datamart].[marks] &#xA;SET [marks] = 88 &#xA;WHERE [roll_number] = '1234';&#xA;SELECT @@ROWCOUNT as RecordsUpdated;"
           SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
@@ -216,7 +216,7 @@
       DTS:refId="Package\Upload Example_Data1 csv to DW"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{eeed0105-8393-460b-bb12-bcef376e391c}"
+      DTS:DTSID="{511A3C58-31B6-4443-831C-3AF440FE77D1}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="Upload Example_Data1 csv to DW"
@@ -1421,7 +1421,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{C9BA58F8-0F5A-4098-B16C-4F1FA878DB4B}"
+      DTS:DTSID="{D7CA488A-7FE1-43AB-A7EC-646DF77C1207}"
       DTS:From="Package\Upload Example_Data1 csv to DW"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
@@ -1429,7 +1429,7 @@
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
       DTS:CreationName=""
-      DTS:DTSID="{5EA04DF5-5DA4-44EA-BB3E-9ABC7F181CCD}"
+      DTS:DTSID="{288998F1-B63E-4302-BDCE-7A12587593D0}"
       DTS:From="Package\Update a records in marks table"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
