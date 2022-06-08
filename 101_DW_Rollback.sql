@@ -1,0 +1,10 @@
+-- Rollback
+USE [master]
+GO
+
+ALTER DATABASE [SampleWarehouse] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+GO
+
+DROP DATABASE [SampleWarehouse]
+GO
+
