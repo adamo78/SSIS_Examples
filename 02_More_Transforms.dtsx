@@ -1,0 +1,1611 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/3/2022 12:25:06 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADAM-DELL"
+  DTS:CreatorName="ADAM-DELL\adamo"
+  DTS:DTSID="{E6807E64-EE49-4FC4-B777-B31E3CA069B3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="02_More_Transforms"
+  DTS:PackageType="5"
+  DTS:VersionBuild="26"
+  DTS:VersionGUID="{A72D490D-B88E-4D32-B1C9-4E2C509AC5F4}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{8CB8EED8-4291-4D52-9FCE-45A77E8B2363}"
+      DTS:ObjectName="LocalHost.SampleWarehouse">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=SampleWarehouse;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[summary_output]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{D5C81676-DCFC-4837-92FE-1DBB560E1818}"
+      DTS:ObjectName="summary_output">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2057"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Adam\ETL\Output\summary_output.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="roll_no"
+              DTS:DTSID="{80C3FC68-DE07-4BBC-B0E3-4D3246B0675C}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:DataType="21"
+              DTS:TextQualified="True"
+              DTS:ObjectName="score"
+              DTS:DTSID="{A5AA08B0-78B9-4A64-9ACC-508633EB42BE}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[txt_input]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{96479EB6-03C7-4C73-A7F6-0D878253916B}"
+      DTS:ObjectName="txt_input">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2057"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Adam\ETL\Sample Data\Clean\scores.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="ref "
+              DTS:DTSID="{3C55AF9D-4918-4A63-BF81-F079DC744714}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x007C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName=" roll_no "
+              DTS:DTSID="{C42D2CB3-23C9-4758-BD29-6C628DFC5478}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName=" score"
+              DTS:DTSID="{CCC7E227-E8F4-4B35-A3BB-53BB89E1FA39}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{42018115-FA7A-4941-8EBF-B8AC223F700B}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsInSource">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9217AFDA-DB7F-4E3A-8A74-01E66AF125AB}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsInSummary">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{306CDAC9-36D3-4E10-AF32-433A0407A32C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsUploaded">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Log completion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{167428C1-D955-44FB-AAB3-E961300BD10F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Log completion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8CB8EED8-4291-4D52-9FCE-45A77E8B2363}"
+          SQLTask:SqlStatementSource="INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) &#xA;VALUES &#xA;&#x9;('2.1','Records in source',?),&#xA;&#x9;('2.2','Records uploaded',?),&#xA;&#x9;('2.3','Records in summary',?),&#xA;&#x9;('2.4','Complete',null);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::RecordsInSource"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::RecordsUploaded"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::RecordsInSummary"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload scores txt file to DW and output summary to txt file"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{90c0fa69-bf4b-4c95-aa8f-a1fabd6c1c38}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload scores txt file to DW and output summary to txt file"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Convert strings to integers"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Inputs[Data Conversion Input].Columns[ roll_no ]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName=" roll_no "
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]" />
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Inputs[Data Conversion Input].Columns[ score]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName=" score"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_no_converted]"
+                      dataType="ui4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_no_converted]"
+                      name="roll_no_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[score_converted]"
+                      dataType="ui4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[score_converted]"
+                      name="score_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="Count of records per roll_no"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Inputs[Aggregate Input 1].Columns[ roll_no ]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName=" roll_no "
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]" />
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Inputs[Aggregate Input 1].Columns[ score]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName=" score"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1].Columns[roll_no]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1].Columns[roll_no]"
+                      name="roll_no">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1].Columns[score]"
+                      dataType="ui8"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1].Columns[score]"
+                      name="score">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Count records in source"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count records in source">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordsInSource</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count records in source.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count records in source.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Count records in source.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Count records uploaded"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count records uploaded">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordsUploaded</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count records uploaded.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count records uploaded.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Count records uploaded.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Count summary records"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count summary records">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordsInSummary</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count summary records.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Count summary records.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Count summary records.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations"
+              componentClassID="Microsoft.Multicast"
+              contactInfo="Multicast;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Distributes every input row to every row in one or more outputs. For example, branch your data flow to make a copy of data so that some values can be masked before sharing with external partners."
+              name="Multicast to 2 destinations">
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Inputs[Multicast Input 1]"
+                  name="Multicast Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Outputs[Multicast Output 1]"
+                  deleteOutputOnPathDetached="true"
+                  name="Multicast Output 1"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Inputs[Multicast Input 1]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Outputs[Multicast Output 3]"
+                  deleteOutputOnPathDetached="true"
+                  name="Multicast Output 3"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Inputs[Multicast Input 1]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Outputs[Multicast Output 2]"
+                  dangling="true"
+                  deleteOutputOnPathDetached="true"
+                  name="Multicast Output 2"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Inputs[Multicast Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="2057"
+              name="Output summary to text file"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header">my header</property>
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[summary_output]"
+                  connectionManagerRefId="Package.ConnectionManagers[summary_output]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input].Columns[roll_no]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="roll_no"
+                      externalMetadataColumnId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input].ExternalColumns[roll_no]"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1].Columns[roll_no]" />
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input].Columns[score]"
+                      cachedDataType="ui8"
+                      cachedName="score"
+                      externalMetadataColumnId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input].ExternalColumns[score]"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1].Columns[score]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input].ExternalColumns[roll_no]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="roll_no" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input].ExternalColumns[score]"
+                      dataType="ui8"
+                      name="score" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="2057"
+              name="scores txt input file"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[txt_input]"
+                  connectionManagerRefId="Package.ConnectionManagers[txt_input]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].ExternalColumns[ roll_no ]"
+                      length="50"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]"
+                      name=" roll_no "
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].ExternalColumns[ score]"
+                      length="50"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]"
+                      name=" score"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].ExternalColumns[ref ]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="ref " />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].ExternalColumns[ roll_no ]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name=" roll_no " />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].ExternalColumns[ score]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name=" score" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Inputs[Sort Input].Columns[roll_no_converted]"
+                      cachedDataType="ui4"
+                      cachedName="roll_no_converted"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_no_converted]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Inputs[Sort Input].Columns[score_converted]"
+                      cachedDataType="ui4"
+                      cachedName="score_converted"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[score_converted]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output].Columns[roll_no_converted]"
+                      dataType="ui4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output].Columns[roll_no_converted]"
+                      name="roll_no_converted"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_no_converted]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output].Columns[score_converted]"
+                      dataType="ui4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output].Columns[score_converted]"
+                      name="score_converted">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output].Columns[score_converted]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Trim spaces"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Inputs[Derived Column Input].Columns[ roll_no ]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName=" roll_no "
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM](#{Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ roll_no ]}))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM([ roll_no ]))</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Inputs[Derived Column Input].Columns[ score]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName=" score"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[RTRIM]([LTRIM](#{Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output].Columns[ score]}))</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">RTRIM(LTRIM([ score]))</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Upload to DW"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[datamart].[marks]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].Columns[roll_no_converted]"
+                      cachedDataType="ui4"
+                      cachedName="roll_no_converted"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[roll_number]"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output].Columns[roll_no_converted]" />
+                    <inputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].Columns[score_converted]"
+                      cachedDataType="ui4"
+                      cachedName="score_converted"
+                      externalMetadataColumnId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[marks]"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output].Columns[score_converted]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[roll_number]"
+                      dataType="i4"
+                      name="roll_number" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[marks]"
+                      dataType="i4"
+                      name="marks" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[teams_id]"
+                      dataType="i4"
+                      name="teams_id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="comments" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="upload_notes" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[created_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="created_by" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[created_on]"
+                      dataType="dbTimeStamp"
+                      name="created_on" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[changed_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="changed_by" />
+                    <externalMetadataColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[changed_on]"
+                      dataType="dbTimeStamp"
+                      name="changed_on" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Aggregate Output 1]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Count summary records.Inputs[Row Count Input 1]"
+              name="Aggregate Output 1"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Outputs[Aggregate Output 1]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Data Conversion Output]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Inputs[Multicast Input 1]"
+              name="Data Conversion Output"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Derived Column Output]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Flat File Source Output]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Count records in source.Inputs[Row Count Input 1]"
+              name="Flat File Source Output"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file.Outputs[Flat File Source Output]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Multicast Output 1]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no.Inputs[Aggregate Input 1]"
+              name="Multicast Output 1"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Outputs[Multicast Output 1]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Multicast Output 3]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Inputs[Sort Input]"
+              name="Multicast Output 3"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations.Outputs[Multicast Output 3]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Row Count Output 1]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Count records uploaded.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Row Count Output 11]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file.Inputs[Flat File Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Count summary records.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Row Count Output 12]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces.Inputs[Derived Column Input]"
+              name="Row Count Output 1"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Count records in source.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload scores txt file to DW and output summary to txt file.Paths[Sort Output]"
+              endId="Package\Upload scores txt file to DW and output summary to txt file\Count records uploaded.Inputs[Row Count Input 1]"
+              name="Sort Output"
+              startId="Package\Upload scores txt file to DW and output summary to txt file\Sort.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{44EF8AB3-B0FE-4C48-AA17-93471D91C31E}"
+      DTS:From="Package\Upload scores txt file to DW and output summary to txt file"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Log completion" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="152,42.6666666666667"
+          Id="Package\Log completion"
+          TopLeft="495.54165948617,150.526318622758" />
+        <NodeLayout
+          Size="222.666666666667,69.3333333333334"
+          Id="Package\Upload scores txt file to DW and output summary to txt file"
+          TopLeft="468.208326152836,46.4210495149659" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="575.54165948617,115.754382848299">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.7719357744588"
+              Start="0,0"
+              End="0,27.2719357744588">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.2719357744588" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Flat File Source&#xA;Derived Column&#xA;LTRIM RTRIM Expressions&#xA;Aggregate Task&#xA;Multicast&#xA;Sort&#xA;OLE DB Destination&#xA;Flat File Destination&#xA;Execute SQL"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="162.666666666667,167.333333333334"
+          Id="27379e3c-efa0-4b83-bcda-0fa2e066e50f"
+          TopLeft="82.4999987706542,53.3684220571597" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Upload scores txt file to DW and output summary to txt file">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW"
+          TopLeft="414.374993825331,442.052638958365" />
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Count summary records"
+          TopLeft="923.124986244366,395.13158638474" />
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Output summary to text file"
+          TopLeft="666.406240069773,442.052638958365" />
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Trim spaces"
+          TopLeft="540.091137785348,105.652633379371" />
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Count records uploaded"
+          TopLeft="188.124997196719,395.13158638474" />
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Multicast to 2 destinations"
+          TopLeft="540.091137785348,273.168425629674" />
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Count records in source"
+          TopLeft="789.374988237396,62.2631590666863" />
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Sort"
+          TopLeft="414.374993825331,357.61053229402" />
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Count of records per roll_no"
+          TopLeft="666.406240069773,357.61053229402" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\Convert strings to integers"
+          TopLeft="540.091137785348,189.410529504522" />
+        <NodeLayout
+          Size="212,42.6666666666667"
+          Id="Package\Upload scores txt file to DW and output summary to txt file\scores txt input file"
+          TopLeft="540.091137785348,21.8947372542194" />
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Flat File Source Output]"
+          TopLeft="752.091137785348,43.2280705875527">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="37.283850452048,34.5906440346891"
+              Start="0,0"
+              End="29.783850452048,34.5906440346891">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="17.5617448397386,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.5617448397386,0"
+                    Point2="21.5617448397386,0"
+                    Point3="21.5617448397386,4" />
+                  <mssgle:LineSegment
+                    End="21.5617448397386,30.5906440346891" />
+                  <mssgle:CubicBezierSegment
+                    Point1="21.5617448397386,30.5906440346891"
+                    Point2="21.5617448397386,34.5906440346891"
+                    Point3="25.5617448397386,34.5906440346891" />
+                  <mssgle:LineSegment
+                    End="29.783850452048,34.5906440346891" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Derived Column Output]"
+          TopLeft="644.091137785348,148.319300046038">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.0912294584843"
+              Start="0,0"
+              End="0,33.5912294584843">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5912294584843" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Data Conversion Output]"
+          TopLeft="644.091137785348,232.077196171189">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.0912294584853"
+              Start="0,0"
+              End="0,33.5912294584853">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.5912294584853" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Aggregate Output 1]"
+          TopLeft="878.406240069773,378.943865627353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44.718746174593,31.7432763129422"
+              Start="0,0"
+              End="37.218746174593,31.7432763129422">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="21.8614435708489,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="21.8614435708489,0"
+                    Point2="25.8614435708489,0"
+                    Point3="25.8614435708489,4" />
+                  <mssgle:LineSegment
+                    End="25.8614435708489,27.7432763129422" />
+                  <mssgle:CubicBezierSegment
+                    Point1="25.8614435708489,27.7432763129422"
+                    Point2="25.8614435708489,31.7432763129422"
+                    Point3="29.8614435708489,31.7432763129422" />
+                  <mssgle:LineSegment
+                    End="37.218746174593,31.7432763129422" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Sort Output]"
+          TopLeft="414.374993825331,378.943865627353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-32.9166632952788,31.7432763129422"
+              Start="0,0"
+              End="-25.4166632952788,31.7432763129422">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-15.036142628595,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-15.036142628595,0"
+                    Point2="-19.036142628595,0"
+                    Point3="-19.036142628595,4" />
+                  <mssgle:LineSegment
+                    End="-19.036142628595,27.7432763129422" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-19.036142628595,27.7432763129422"
+                    Point2="-19.036142628595,31.7432763129422"
+                    Point3="-23.036142628595,31.7432763129422" />
+                  <mssgle:LineSegment
+                    End="-25.4166632952788,31.7432763129422" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Row Count Output 12]"
+          TopLeft="789.374988237396,89.3742701777974">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.283850452048,37.6116965349069"
+              Start="0,0"
+              End="-29.783850452048,37.6116965349069">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-11.7221056123094,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.7221056123094,0"
+                    Point2="-15.7221056123094,0"
+                    Point3="-15.7221056123094,4" />
+                  <mssgle:LineSegment
+                    End="-15.7221056123094,33.6116965349069" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-15.7221056123094,33.6116965349069"
+                    Point2="-15.7221056123094,37.6116965349069"
+                    Point3="-19.7221056123094,37.6116965349069" />
+                  <mssgle:LineSegment
+                    End="-29.783850452048,37.6116965349069" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Row Count Output 11]"
+          TopLeft="923.124986244366,422.242697495851">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-44.718746174593,41.1432747958472"
+              Start="0,0"
+              End="-37.218746174593,41.1432747958472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-14.857302603744,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-14.857302603744,0"
+                    Point2="-18.857302603744,0"
+                    Point3="-18.857302603744,4" />
+                  <mssgle:LineSegment
+                    End="-18.857302603744,37.1432747958472" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.857302603744,37.1432747958472"
+                    Point2="-18.857302603744,41.1432747958472"
+                    Point3="-22.857302603744,41.1432747958472" />
+                  <mssgle:LineSegment
+                    End="-37.218746174593,41.1432747958472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Row Count Output 1]"
+          TopLeft="381.458330530052,422.242697495851">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="32.9166632952788,41.1432747958472"
+              Start="0,0"
+              End="25.4166632952788,41.1432747958472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="9.88052066668383,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="9.88052066668383,0"
+                    Point2="13.8805206666838,0"
+                    Point3="13.8805206666838,4" />
+                  <mssgle:LineSegment
+                    End="13.8805206666838,37.1432747958472" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.8805206666838,37.1432747958472"
+                    Point2="13.8805206666838,41.1432747958472"
+                    Point3="17.8805206666838,41.1432747958472" />
+                  <mssgle:LineSegment
+                    End="25.4166632952788,41.1432747958472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Multicast Output 3]"
+          TopLeft="612.091137785348,315.835092296341">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-91.7161439600167,41.7754399976791"
+              Start="0,0"
+              End="-91.7161439600167,34.2754399976791">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.8979307855781" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.8979307855781"
+                    Point2="0,16.8979307855781"
+                    Point3="-4,16.8979307855781" />
+                  <mssgle:LineSegment
+                    End="-87.7161439600167,16.8979307855781" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-87.7161439600167,16.8979307855781"
+                    Point2="-91.7161439600167,16.8979307855781"
+                    Point3="-91.7161439600167,20.8979307855781" />
+                  <mssgle:LineSegment
+                    End="-91.7161439600167,34.2754399976791" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload scores txt file to DW and output summary to txt file.Paths[Multicast Output 1]"
+          TopLeft="680.091137785348,315.835092296341">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="92.3151022844253,41.7754399976791"
+              Start="0,0"
+              End="92.3151022844253,34.2754399976791">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.8979307855781" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.8979307855781"
+                    Point2="0,16.8979307855781"
+                    Point3="4,16.8979307855781" />
+                  <mssgle:LineSegment
+                    End="88.3151022844253,16.8979307855781" />
+                  <mssgle:CubicBezierSegment
+                    Point1="88.3151022844253,16.8979307855781"
+                    Point2="92.3151022844253,16.8979307855781"
+                    Point3="92.3151022844253,20.8979307855781" />
+                  <mssgle:LineSegment
+                    End="92.3151022844253,34.2754399976791" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload scores txt file to DW and output summary to txt file\Upload to DW">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

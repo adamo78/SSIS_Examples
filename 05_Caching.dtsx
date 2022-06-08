@@ -1,0 +1,2002 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/3/2022 12:49:13 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADAM-DELL"
+  DTS:CreatorName="ADAM-DELL\adamo"
+  DTS:DTSID="{B7128D83-EC89-4E77-A1F1-287E9D8C69AE}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="05_Caching"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{2E65CDCA-C960-43BA-AB12-5DAB4E2BB3A8}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Cache Connection Manager]"
+      DTS:CreationName="CACHE"
+      DTS:DTSID="{1AE97BA8-544E-49E6-A4F0-F17C1B7F3B8C}"
+      DTS:ObjectName="Cache Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager>
+          <DTS:CacheColumns>
+            <DTS:CacheColumn
+              DTS:DataType="3"
+              DTS:ObjectName="teams_id"
+              DTS:DTSID="{F4E946A6-784F-4459-9791-3A56D5D216F7}"
+              DTS:CreationName="" />
+            <DTS:CacheColumn
+              DTS:DataType="129"
+              DTS:Length="50"
+              DTS:CodePage="1252"
+              DTS:IndexPosition="1"
+              DTS:ObjectName="team_name"
+              DTS:DTSID="{16509623-3B2F-4611-9B38-D55BCA474B86}"
+              DTS:CreationName="" />
+          </DTS:CacheColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{8ACD6C30-8994-49DD-B0FD-0E08DE350E50}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="0"
+          DTS:ConnectRetryInterval="0"
+          DTS:ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Adam\ETL\Sample Data\Dirty\Example_Data1.xls;Extended Properties=&quot;EXCEL 8.0;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D66B941F-FA42-462F-9CAE-A44FD004FB7D}"
+      DTS:ObjectName="LocalHost.SampleWarehouse">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=SampleWarehouse;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7B8BDF73-C713-4A89-BE0F-B0892F57572C}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{55D7B941-BDAC-4A17-AFA4-65C95B764130}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) VALUES ('5','Insert rows from: Example_Data1.xls', &quot; + (DT_WSTR, 4) @[User::RecordCount] + &quot;)&quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="SSISlog_string">
+      <DTS:VariableValue
+        DTS:DataType="8">INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) VALUES ('5','Insert rows from: Example_Data1.xls', 0)</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9C4D14C3-6C58-4858-8F45-26E52B9CE052}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="UnknownTeamID">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Cache teams table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{b1d0a336-c190-4349-bf7c-0566bd82936d}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Cache teams table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Cache teams table\Cache teams table"
+              componentClassID="Microsoft.Cache"
+              contactInfo="Cache Transform;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Writes data to a cache (a .caw file) with the Cache Connection Manager. Reuse the cache between multiple Lookup transforms to reduce database load. Share the cache to reduce memory usage. Note: cache data is stored in clear text and not recommended for sensitive data."
+              name="Cache teams table"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cache teams table\Cache teams table.Connections[CacheConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Cache Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Cache Connection Manager]"
+                  description="The connection used to access the cache."
+                  name="CacheConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Cache teams table\Cache teams table.Inputs[Cache Input]"
+                  hasSideEffects="true"
+                  name="Cache Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Cache teams table\Cache teams table.Inputs[Cache Input].Columns[teams_id]"
+                      cachedDataType="i4"
+                      cachedName="teams_id"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].Columns[teams_id]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="The cache column associated with the input column."
+                          name="CacheColumnName">teams_id</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Cache teams table\Cache teams table.Inputs[Cache Input].Columns[team_name]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="team_name"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].Columns[team_name]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="The cache column associated with the input column."
+                          name="CacheColumnName">team_name</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Cache teams table\Cache teams table.Outputs[Cache Output]"
+                  name="Cache Output"
+                  synchronousInputId="Package\Cache teams table\Cache teams table.Inputs[Cache Input]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Cache teams table\Connect to teams table"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Connect to teams table"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[datamart].[teams]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Cache teams table\Connect to teams table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].Columns[teams_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].ExternalColumns[teams_id]"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].Columns[teams_id]"
+                      name="teams_id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].Columns[team_name]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].ExternalColumns[team_name]"
+                      length="50"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].Columns[team_name]"
+                      name="team_name"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].ExternalColumns[teams_id]"
+                      dataType="i4"
+                      name="teams_id" />
+                    <externalMetadataColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output].ExternalColumns[team_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="team_name" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[teams_id]"
+                      dataType="i4"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[teams_id]"
+                      name="teams_id" />
+                    <outputColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[team_name]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[team_name]"
+                      name="team_name" />
+                    <outputColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Cache teams table.Paths[OLE DB Source Output]"
+              endId="Package\Cache teams table\Cache teams table.Inputs[Cache Input]"
+              name="OLE DB Source Output"
+              startId="Package\Cache teams table\Connect to teams table.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Log row count"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{abd69a3a-58cb-46cf-8f09-a0e4103023cc}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Log row count"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D66B941F-FA42-462F-9CAE-A44FD004FB7D}"
+          SQLTask:SqlStmtSourceType="Variable"
+          SQLTask:SqlStatementSource="User::SSISlog_string" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload excel example 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{c2dd8e07-2e4e-4cf1-9a2f-afc4ef14849a}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload excel example 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Add upload notes - Missing team and unknown team_id"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Inputs[Derived Column Input].Columns[Copy of team_leader]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of team_leader"
+                      lineageId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output].Columns[Copy of team_leader]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output].Columns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output].Columns[upload_notes]"
+                      name="upload_notes"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,100,1252)("Missing Team - " + #{Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output].Columns[Copy of team_leader]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,100,1252)("Missing Team - " + [Copy of team_leader])</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output].Columns[team_id_unknown]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output].Columns[team_id_unknown]"
+                      name="team_id_unknown"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">@[User::UnknownTeamID]</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">@[User::UnknownTeamID]</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Add upload notes - OK"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Add upload notes - OK"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Add upload notes - OK.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Upload excel example 1\Add upload notes - OK.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Output].Columns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Output].Columns[upload_notes]"
+                      name="upload_notes"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,100,1252)"Upload OK"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,100,1252)"Upload OK"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Upload excel example 1\Add upload notes - OK.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Combine lookup outputs back together"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Combine lookup outputs back together"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 1]"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 1].Columns[roll_number]"
+                      cachedDataType="r8"
+                      cachedName="roll_number"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[roll_number]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[roll_number]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 1].Columns[marks]"
+                      cachedDataType="r8"
+                      cachedName="marks"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[marks]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[marks]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 1].Columns[teams_id]"
+                      cachedDataType="i4"
+                      cachedName="teams_id"
+                      lineageId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Match Output].Columns[teams_id]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[teams_id]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 1].Columns[upload_notes]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="upload_notes"
+                      lineageId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Output].Columns[upload_notes]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[upload_notes]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 2].Columns[roll_number]"
+                      cachedDataType="r8"
+                      cachedName="roll_number"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[roll_number]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[roll_number]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 2].Columns[marks]"
+                      cachedDataType="r8"
+                      cachedName="marks"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[marks]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[marks]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 2].Columns[upload_notes]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="upload_notes"
+                      lineageId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output].Columns[upload_notes]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[upload_notes]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 2].Columns[team_id_unknown]"
+                      cachedDataType="i4"
+                      cachedName="team_id_unknown"
+                      lineageId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output].Columns[team_id_unknown]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[teams_id]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[roll_number]"
+                      dataType="r8"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[roll_number]"
+                      name="roll_number" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[marks]"
+                      dataType="r8"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[marks]"
+                      name="marks" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[teams_id]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[teams_id]"
+                      name="teams_id" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[upload_notes]"
+                      name="upload_notes" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Convert team leader string"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Convert team leader string"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Convert team leader string.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Convert team leader string.Inputs[Data Conversion Input].Columns[team_leader]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="team_leader"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[team_leader]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Upload excel example 1\Convert team leader string.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output].Columns[Copy of team_leader]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output].Columns[Copy of team_leader]"
+                      name="Copy of team_leader"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[team_leader]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Upload excel example 1\Convert team leader string.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Count rows in source"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count rows in source">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordCount</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Count rows in source.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Count rows in source.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload excel example 1\Count rows in source.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Lookup cached team"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup cached team"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [datamart].[teams]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [datamart].[teams]) [refTable]
+where [refTable].[team_name] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="teams_id" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="team_name" dataType="DT_STR" length="50" precision="0" scale="0" codePage="1252"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output].Columns[Copy of team_leader]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload excel example 1\Lookup cached team.Connections[CacheConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Cache Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Cache Connection Manager]"
+                  description="Connection manager used to access lookup data."
+                  name="CacheConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Lookup cached team.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Lookup cached team.Inputs[Lookup Input].Columns[Copy of team_leader]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="Copy of team_leader"
+                      lineageId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output].Columns[Copy of team_leader]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">team_name</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Upload excel example 1\Lookup cached team.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Match Output].Columns[teams_id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Match Output].Columns[teams_id]"
+                      name="teams_id"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">teams_id</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Upload excel example 1\Lookup cached team.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Upload excel example 1\Lookup cached team.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Output to DW marks table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Output to DW marks table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[datamart].[marks]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload excel example 1\Output to DW marks table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].Columns[roll_number]"
+                      cachedDataType="r8"
+                      cachedName="roll_number"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[roll_number]"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[roll_number]" />
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].Columns[marks]"
+                      cachedDataType="r8"
+                      cachedName="marks"
+                      externalMetadataColumnId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[marks]"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[marks]" />
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].Columns[teams_id]"
+                      cachedDataType="i4"
+                      cachedName="teams_id"
+                      externalMetadataColumnId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[teams_id]"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[teams_id]" />
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].Columns[upload_notes]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="upload_notes"
+                      externalMetadataColumnId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[upload_notes]"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[upload_notes]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[roll_number]"
+                      dataType="i4"
+                      name="roll_number" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[marks]"
+                      dataType="i4"
+                      name="marks" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="comments" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[created_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="created_by" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[created_on]"
+                      dataType="dbTimeStamp"
+                      name="created_on" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[changed_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="changed_by" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[changed_on]"
+                      dataType="dbTimeStamp"
+                      name="changed_on" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[teams_id]"
+                      dataType="i4"
+                      name="teams_id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input].ExternalColumns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="upload_notes" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Output to DW marks table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Output to DW marks table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Output to DW marks table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Output to DW marks table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Sort by roll no"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort by roll no"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload excel example 1\Sort by roll no.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Inputs[Sort Input].Columns[roll_number]"
+                      cachedDataType="r8"
+                      cachedName="roll_number"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[roll_number]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Inputs[Sort Input].Columns[marks]"
+                      cachedDataType="r8"
+                      cachedName="marks"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[marks]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Inputs[Sort Input].Columns[teams_id]"
+                      cachedDataType="i4"
+                      cachedName="teams_id"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[teams_id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Inputs[Sort Input].Columns[upload_notes]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="100"
+                      cachedName="upload_notes"
+                      lineageId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[upload_notes]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[roll_number]"
+                      dataType="r8"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[roll_number]"
+                      name="roll_number"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[roll_number]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[marks]"
+                      dataType="r8"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[marks]"
+                      name="marks">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[marks]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[teams_id]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[teams_id]"
+                      name="teams_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[teams_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      lineageId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output].Columns[upload_notes]"
+                      name="upload_notes">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1].Columns[upload_notes]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload excel example 1\Upload Example_Data1 xls file"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Upload Example_Data1 xls file"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">Sheet1$</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[roll_number]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].ExternalColumns[roll_number]"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[roll_number]"
+                      name="roll_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[marks]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].ExternalColumns[marks]"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[marks]"
+                      name="marks"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[team_leader]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].ExternalColumns[team_leader]"
+                      length="255"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].Columns[team_leader]"
+                      name="team_leader"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].ExternalColumns[roll_number]"
+                      dataType="r8"
+                      name="roll_number" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].ExternalColumns[marks]"
+                      dataType="r8"
+                      name="marks" />
+                    <externalMetadataColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output].ExternalColumns[team_leader]"
+                      dataType="wstr"
+                      length="255"
+                      name="team_leader" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[roll_number]"
+                      dataType="r8"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[roll_number]"
+                      name="roll_number" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[marks]"
+                      dataType="r8"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[marks]"
+                      name="marks" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[team_leader]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[team_leader]"
+                      name="team_leader" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload excel example 1.Paths[Data Conversion Output]"
+              endId="Package\Upload excel example 1\Lookup cached team.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\Upload excel example 1\Convert team leader string.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Derived Column Output]"
+              endId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 1]"
+              name="Derived Column Output"
+              startId="Package\Upload excel example 1\Add upload notes - OK.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Derived Column Output1]"
+              endId="Package\Upload excel example 1\Combine lookup outputs back together.Inputs[Union All Input 2]"
+              name="Derived Column Output"
+              startId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Excel Source Output]"
+              endId="Package\Upload excel example 1\Count rows in source.Inputs[Row Count Input 1]"
+              name="Excel Source Output"
+              startId="Package\Upload excel example 1\Upload Example_Data1 xls file.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Lookup Match Output]"
+              endId="Package\Upload excel example 1\Add upload notes - OK.Inputs[Derived Column Input]"
+              name="Lookup Match Output"
+              startId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Lookup No Match Output]"
+              endId="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id.Inputs[Derived Column Input]"
+              name="Lookup No Match Output"
+              startId="Package\Upload excel example 1\Lookup cached team.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Row Count Output 1]"
+              endId="Package\Upload excel example 1\Convert team leader string.Inputs[Data Conversion Input]"
+              name="Row Count Output 1"
+              startId="Package\Upload excel example 1\Count rows in source.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Sort Output]"
+              endId="Package\Upload excel example 1\Output to DW marks table.Inputs[OLE DB Destination Input]"
+              name="Sort Output"
+              startId="Package\Upload excel example 1\Sort by roll no.Outputs[Sort Output]" />
+            <path
+              refId="Package\Upload excel example 1.Paths[Union All Output 1]"
+              endId="Package\Upload excel example 1\Sort by roll no.Inputs[Sort Input]"
+              name="Union All Output 1"
+              startId="Package\Upload excel example 1\Combine lookup outputs back together.Outputs[Union All Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{25f6efb1-4170-4006-abbb-1afa2b590bc9}"
+      DTS:From="Package\Upload excel example 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Log row count" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{835ac372-938f-4f61-adc6-58a781bd04b0}"
+      DTS:From="Package\Cache teams table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Upload excel example 1" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\Cache teams table"
+          TopLeft="332.131939333036,75.2631593113791" />
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\Log row count"
+          TopLeft="332.131939333036,226.473688473332" />
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\Upload excel example 1"
+          TopLeft="332.131939333036,150.868423892356" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="428.798605999703,193.535090559022">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.9385979143097"
+              Start="0,0"
+              End="0,25.4385979143097">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.4385979143097" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="428.798605999703,117.929825978046">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.9385979143098"
+              Start="0,0"
+              End="0,25.4385979143098">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.4385979143098" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="OLE DB Source&#xA;Cache Transform&#xA;Excel Source&#xA;Row Count&#xA;Data Conversion&#xA;Lookup&#xA;Derived Column&#xA;Union All&#xA;Sort&#xA;OLE DB Destination&#xA;Execute SQL"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="132,199.333333333334"
+          Id="e82707fc-7d13-4006-b105-f1c28ee14a82"
+          TopLeft="84.3749987427145,65.6842117626581" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Cache teams table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="189.333333333334,42.6666666666667"
+          Id="Package\Cache teams table\Connect to teams table"
+          TopLeft="494.5,48" />
+        <NodeLayout
+          Size="189.333333333334,42.6666666666667"
+          Id="Package\Cache teams table\Cache teams table"
+          TopLeft="494.5,142.666666666667" />
+        <EdgeLayout
+          Id="Package\Cache teams table.Paths[OLE DB Source Output]"
+          TopLeft="589.166666666667,90.6666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,52.0000000000003"
+              Start="0,0"
+              End="0,44.5000000000003">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.5000000000003" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Cache teams table\Connect to teams table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Upload excel example 1">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="261.333333333334,50"
+          Id="Package\Upload excel example 1\Add upload notes - OK"
+          TopLeft="277.791662000741,280.596497049182" />
+        <NodeLayout
+          Size="261.333333333334,42.6666666666667"
+          Id="Package\Upload excel example 1\Output to DW marks table"
+          TopLeft="428.894834445021,497.719308806037" />
+        <NodeLayout
+          Size="261.333333333334,42.6666666666667"
+          Id="Package\Upload excel example 1\Upload Example_Data1 xls file"
+          TopLeft="428.894834445021,42.1403514696071" />
+        <NodeLayout
+          Size="261.333333333334,42.6666666666667"
+          Id="Package\Upload excel example 1\Sort by roll no"
+          TopLeft="428.894834445021,429.298254886603" />
+        <NodeLayout
+          Size="261.333333333334,42.6666666666667"
+          Id="Package\Upload excel example 1\Convert team leader string"
+          TopLeft="428.894834445021,114.403512004449" />
+        <NodeLayout
+          Size="261.333333333334,42.6666666666667"
+          Id="Package\Upload excel example 1\Combine lookup outputs back together"
+          TopLeft="428.894834445021,362.92983258475" />
+        <NodeLayout
+          Size="261.333333333334,42.6666666666667"
+          Id="Package\Upload excel example 1\Lookup cached team"
+          TopLeft="428.894834445021,193.24561886455" />
+        <NodeLayout
+          Size="261.333333333334,50"
+          Id="Package\Upload excel example 1\Add upload notes - Missing team and unknown team_id"
+          TopLeft="570.291657642151,280.596497049182" />
+        <NodeLayout
+          Size="180,42.6666666666667"
+          Id="Package\Upload excel example 1\Count rows in source"
+          TopLeft="718.755945549923,72.5614053890423" />
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Data Conversion Output]"
+          TopLeft="559.561501111688,157.070178671116">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,36.1754401934337"
+              Start="0,0"
+              End="0,28.6754401934337">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.6754401934337" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Union All Output 1]"
+          TopLeft="559.561501111688,405.596499251416">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23.7017556351864"
+              Start="0,0"
+              End="0,16.2017556351864">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.2017556351864" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Sort Output]"
+          TopLeft="559.561501111688,471.964921553269">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25.7543872527676"
+              Start="0,0"
+              End="0,18.2543872527676">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.2543872527676" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Row Count Output 1]"
+          TopLeft="718.755945549923,99.6725165001534">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-28.5277777715689,36.0643288376293"
+              Start="0,0"
+              End="-21.0277777715689,36.0643288376293">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-8.02978580728811,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.02978580728811,0"
+                    Point2="-12.0297858072881,0"
+                    Point3="-12.0297858072881,4" />
+                  <mssgle:LineSegment
+                    End="-12.0297858072881,32.0643288376293" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.0297858072881,32.0643288376293"
+                    Point2="-12.0297858072881,36.0643288376293"
+                    Point3="-16.0297858072881,36.0643288376293" />
+                  <mssgle:LineSegment
+                    End="-21.0277777715689,36.0643288376293" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Lookup No Match Output]"
+          TopLeft="601.78372333391,235.912285531216">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="99.1746009749075,44.6842115179659"
+              Start="0,0"
+              End="99.1746009749075,37.1842115179659">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.0368318297672" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.0368318297672"
+                    Point2="0,18.0368318297672"
+                    Point3="4,18.0368318297672" />
+                  <mssgle:LineSegment
+                    End="95.1746009749075,18.0368318297672" />
+                  <mssgle:CubicBezierSegment
+                    Point1="95.1746009749075,18.0368318297672"
+                    Point2="99.1746009749075,18.0368318297672"
+                    Point3="99.1746009749075,22.0368318297672" />
+                  <mssgle:LineSegment
+                    End="99.1746009749075,37.1842115179659" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-6.21908623129625,23.0368318297672,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Lookup Match Output]"
+          TopLeft="517.339278889466,235.912285531216">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-108.880950222058,44.6842115179659"
+              Start="0,0"
+              End="-108.880950222058,37.1842115179659">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.0368318297672" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.0368318297672"
+                    Point2="0,18.0368318297672"
+                    Point3="-4,18.0368318297672" />
+                  <mssgle:LineSegment
+                    End="-104.880950222058,18.0368318297672" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-104.880950222058,18.0368318297672"
+                    Point2="-108.880950222058,18.0368318297672"
+                    Point3="-108.880950222058,22.0368318297672" />
+                  <mssgle:LineSegment
+                    End="-108.880950222058,37.1842115179659" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-102.631861829779,23.0368318297672,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Excel Source Output]"
+          TopLeft="690.228167778354,63.4736848029404">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="28.5277777715689,24.6432761416574"
+              Start="0,0"
+              End="21.0277777715689,24.6432761416574">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="12.4979919642808,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.4979919642808,0"
+                    Point2="16.4979919642808,0"
+                    Point3="16.4979919642808,4" />
+                  <mssgle:LineSegment
+                    End="16.4979919642808,20.6432761416574" />
+                  <mssgle:CubicBezierSegment
+                    Point1="16.4979919642808,20.6432761416574"
+                    Point2="16.4979919642808,24.6432761416574"
+                    Point3="20.4979919642808,24.6432761416574" />
+                  <mssgle:LineSegment
+                    End="21.0277777715689,24.6432761416574" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Derived Column Output1]"
+          TopLeft="700.958324308818,330.596497049182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-99.1746009749075,32.3333355355674"
+              Start="0,0"
+              End="-99.1746009749075,24.8333355355674">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.2819485749631" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.2819485749631"
+                    Point2="0,19.2819485749631"
+                    Point3="-4,19.2819485749631" />
+                  <mssgle:LineSegment
+                    End="-95.1746009749075,19.2819485749631" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-95.1746009749075,19.2819485749631"
+                    Point2="-99.1746009749075,19.2819485749631"
+                    Point3="-99.1746009749075,23.2819485749631" />
+                  <mssgle:LineSegment
+                    End="-99.1746009749075,24.8333355355674" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload excel example 1.Paths[Derived Column Output]"
+          TopLeft="408.458328667408,330.596497049182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="108.880950222058,32.3333355355674"
+              Start="0,0"
+              End="108.880950222058,24.8333355355674">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.2819485749631" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.2819485749631"
+                    Point2="0,19.2819485749631"
+                    Point3="4,19.2819485749631" />
+                  <mssgle:LineSegment
+                    End="104.880950222058,19.2819485749631" />
+                  <mssgle:CubicBezierSegment
+                    Point1="104.880950222058,19.2819485749631"
+                    Point2="108.880950222058,19.2819485749631"
+                    Point3="108.880950222058,23.2819485749631" />
+                  <mssgle:LineSegment
+                    End="108.880950222058,24.8333355355674" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload excel example 1\Output to DW marks table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload excel example 1\Upload Example_Data1 xls file">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload excel example 1\Lookup cached team">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/8/2022 9:31:23 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADAM-DELL"
+  DTS:CreatorName="ADAM-DELL\adamo"
+  DTS:DTSID="{8375D36B-75A5-47F0-9542-2B8B3C11F1B3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionGUID="{AB88DC66-85F7-4111-81E1-673683B25545}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables />
+</DTS:Executable>

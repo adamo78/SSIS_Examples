@@ -1,0 +1,1996 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/3/2022 12:34:00 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADAM-DELL"
+  DTS:CreatorName="ADAM-DELL\adamo"
+  DTS:DTSID="{0CAD69F3-84C2-4B14-BA8C-65655215531E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="03_Sampling"
+  DTS:PackageType="5"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{E0B10C3B-1ABA-4F12-A4E4-08E5B0C4A88A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B598363A-A3B2-4415-88B4-60F95665F85B}"
+      DTS:ObjectName="LocalHost.SampleWarehouse">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=SampleWarehouse;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[sampling_output]"
+      DTS:CreationName="FLATFILE"
+      DTS:Description="Sample 3 rows output"
+      DTS:DTSID="{4EE79CA1-3EA2-47D7-93E0-1BDF6FF78922}"
+      DTS:ObjectName="sampling_output">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2057"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Adam\ETL\Output\sampling_output.txt">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="id"
+              DTS:DTSID="{0E3463E7-1726-4DE9-A3A4-75BA81D6C3D9}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="roll_number"
+              DTS:DTSID="{54B36D50-340A-4B40-883E-9A1DE825BA42}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:DataType="3"
+              DTS:TextQualified="True"
+              DTS:ObjectName="marks"
+              DTS:DTSID="{00AAAFB6-9224-4D6E-AB4F-9D0DE2412FFB}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="18"
+              DTS:DataType="130"
+              DTS:TextQualified="True"
+              DTS:ObjectName="Sample"
+              DTS:DTSID="{7EB6C673-5D5C-4B85-9E2D-DE5EEA13041F}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{9DCA0F3D-B60C-4EE2-B7B9-B28DA7C68A96}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Random3">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{72495F3F-7A51-4AC8-87D1-0C46B120C6A8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Random5Percent">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{93C88AE4-F3C0-4EFA-9546-38C4921A6445}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsInSample">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{6E296595-920A-46D3-8B77-23484EB9FF36}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsInSource">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Log completion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2D99069E-8BD9-4280-934C-26B7922DB25A}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Log completion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B598363A-A3B2-4415-88B4-60F95665F85B}"
+          SQLTask:SqlStatementSource="INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) &#xA;VALUES &#xA;&#x9;('3.1','Records in source',?),&#xA;&#x9;('3.2','Random  3',?),&#xA;&#x9;('3.3','Random 5%',?),&#xA;&#x9;('3.4','Records uploaded',?);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::RecordsInSource"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::Random3"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::Random5Percent"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::RecordsInSample"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Take Sample from Data Warehouse"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{7106bc3b-96fa-4ba4-8b78-6bd6e3c12811}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Take Sample from Data Warehouse"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Combine sample with unselected"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Combine sample with unselected"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 4]"
+                  hasSideEffects="true"
+                  name="Union All Input 4">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 4].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[id]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[id]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 4].Columns[roll_number]"
+                      cachedDataType="i4"
+                      cachedName="roll_number"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[roll_number]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[roll_number]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 4].Columns[marks]"
+                      cachedDataType="i4"
+                      cachedName="marks"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[marks]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[marks]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 4].Columns[Sample]"
+                      cachedDataType="wstr"
+                      cachedLength="17"
+                      cachedName="Sample"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Output].Columns[Sample]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[Sample]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 1]"
+                  hasSideEffects="true"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 1].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[id]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[id]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 1].Columns[roll_number]"
+                      cachedDataType="i4"
+                      cachedName="roll_number"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[roll_number]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[roll_number]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 1].Columns[marks]"
+                      cachedDataType="i4"
+                      cachedName="marks"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[marks]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[marks]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 1].Columns[Sample]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="Sample"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Output].Columns[Sample]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[Sample]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 2].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[id]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[id]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 2].Columns[roll_number]"
+                      cachedDataType="i4"
+                      cachedName="roll_number"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[roll_number]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[roll_number]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 2].Columns[marks]"
+                      cachedDataType="i4"
+                      cachedName="marks"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[marks]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[marks]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 2].Columns[Sample]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="Sample"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Output].Columns[Sample]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[Sample]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[roll_number]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[roll_number]"
+                      name="roll_number" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[marks]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[marks]"
+                      name="marks" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[Sample]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[Sample]"
+                      name="Sample" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Count 5%"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count 5%">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::Random5Percent</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Count 5%.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Count 5%.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Count 5%.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Count random 3"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count random 3">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::Random3</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Count random 3.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Count random 3.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Count random 3.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Count records in source"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count records in source">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordsInSource</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Count records in source.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Count records in source.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Count records in source.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Count sample output"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count sample output">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordsInSample</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Count sample output.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Count sample output.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Count sample output.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Mark as 5% selected"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Mark as 5% selected"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Output].Columns[Sample]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="18"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Output].Columns[Sample]"
+                      name="Sample"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"Random 5% selected"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"Random 5% selected"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Mark as random 3 selected"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Mark as random 3 selected"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Output].Columns[Sample]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="17"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Output].Columns[Sample]"
+                      name="Sample"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"Random 3 Selected"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"Random 3 Selected"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Mark as Unselected"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Mark as Unselected"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Mark as Unselected.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Mark as Unselected.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Output].Columns[Sample]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Output].Columns[Sample]"
+                      name="Sample"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"Unselected"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"Unselected"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Mark as Unselected.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Output to sample file"
+              componentClassID="Microsoft.FlatFileDestination"
+              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Destination"
+              localeId="2057"
+              name="Output to sample file"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether the data will overwrite or append to the destination file."
+                  name="Overwrite">true</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the text to write to the destination file before any data is written."
+                  expressionType="Notify"
+                  name="Header" />
+                <property
+                  dataType="System.Boolean"
+                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
+                  name="EscapeQualifier">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Take Sample from Data Warehouse\Output to sample file.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[sampling_output]"
+                  connectionManagerRefId="Package.ConnectionManagers[sampling_output]"
+                  name="FlatFileConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input]"
+                  hasSideEffects="true"
+                  name="Flat File Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[id]"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].Columns[roll_number]"
+                      cachedDataType="i4"
+                      cachedName="roll_number"
+                      externalMetadataColumnId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[roll_number]"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[roll_number]" />
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].Columns[marks]"
+                      cachedDataType="i4"
+                      cachedName="marks"
+                      externalMetadataColumnId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[marks]"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[marks]" />
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].Columns[Sample]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="Sample"
+                      externalMetadataColumnId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[Sample]"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[Sample]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[roll_number]"
+                      dataType="i4"
+                      name="roll_number" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[marks]"
+                      dataType="i4"
+                      name="marks" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input].ExternalColumns[Sample]"
+                      dataType="wstr"
+                      length="18"
+                      name="Sample" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Sample 3 rRows"
+              componentClassID="Microsoft.RowSampling"
+              contactInfo="Row Sampling;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Randomly samples a specific number of rows from an input data flow. For example, use it randomly select products to feature on your Web site."
+              name="Sample 3 rRows">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of rows in the sample."
+                  expressionType="Notify"
+                  name="SamplingValue">3</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the seed for the random number generator."
+                  name="SamplingSeed">0</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Inputs[Row Sampling Input 1]"
+                  name="Row Sampling Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Inputs[Row Sampling Input 1].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[id]" />
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Inputs[Row Sampling Input 1].Columns[roll_number]"
+                      cachedDataType="i4"
+                      cachedName="roll_number"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[roll_number]" />
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Inputs[Row Sampling Input 1].Columns[marks]"
+                      cachedDataType="i4"
+                      cachedName="marks"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[marks]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows]"
+                  name="Selected Rows">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Output for rows in the sample"
+                      name="Selected">true</property>
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[id]"
+                      name="id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[roll_number]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[roll_number]"
+                      name="roll_number">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[roll_number]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[marks]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows].Columns[marks]"
+                      name="marks">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[marks]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows]"
+                  name="Unselected Rows">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Output for rows in the sample"
+                      name="Selected">false</property>
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[id]"
+                      name="id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[roll_number]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[roll_number]"
+                      name="roll_number">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[roll_number]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[marks]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows].Columns[marks]"
+                      name="marks">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Input column lineage ID"
+                          name="InputColumnLineageID">#{Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[marks]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows"
+              componentClassID="Microsoft.PctSampling"
+              contactInfo="Percentage Sampling;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Randomly samples a percentage of rows from an input data flow. For example, use it twice to help create a data mining model: create one sample for training the model and another sample for testing the model."
+              name="Sample 5% of remaining rows">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage size of the sample."
+                  expressionType="Notify"
+                  name="SamplingValue">5</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the seed for the random number generator."
+                  name="SamplingSeed">0</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Inputs[Percentage Sampling Input 1]"
+                  name="Percentage Sampling Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Outputs[5% selected]"
+                  exclusionGroup="1"
+                  name="5% selected"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Inputs[Percentage Sampling Input 1]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Output for rows in the sample"
+                      name="Selected">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Outputs[95% unselected]"
+                  exclusionGroup="1"
+                  name="95% unselected"
+                  synchronousInputId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Inputs[Percentage Sampling Input 1]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Output for rows in the sample"
+                      name="Selected">false</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Take Sample from Data Warehouse\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Inputs[Sort Input].Columns[id]"
+                      cachedDataType="i4"
+                      cachedName="id"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Inputs[Sort Input].Columns[roll_number]"
+                      cachedDataType="i4"
+                      cachedName="roll_number"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[roll_number]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Inputs[Sort Input].Columns[marks]"
+                      cachedDataType="i4"
+                      cachedName="marks"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[marks]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Inputs[Sort Input].Columns[Sample]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="Sample"
+                      lineageId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[Sample]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[id]"
+                      name="id"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[roll_number]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[roll_number]"
+                      name="roll_number">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[roll_number]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[marks]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[marks]"
+                      name="marks">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[marks]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[Sample]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output].Columns[Sample]"
+                      name="Sample">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1].Columns[Sample]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Take Sample from Data Warehouse\Upload marks table from DW"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Upload marks table from DW"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[datamart].[marks]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[id]"
+                      name="id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[roll_number]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[roll_number]"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[roll_number]"
+                      name="roll_number"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[marks]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[marks]"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].Columns[marks]"
+                      name="marks"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[roll_number]"
+                      dataType="i4"
+                      name="roll_number" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[marks]"
+                      dataType="i4"
+                      name="marks" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[created_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="created_by" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[created_on]"
+                      dataType="dbTimeStamp"
+                      name="created_on" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[changed_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="changed_by" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[changed_on]"
+                      dataType="dbTimeStamp"
+                      name="changed_on" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="comments" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[teams_id]"
+                      dataType="i4"
+                      name="teams_id" />
+                    <externalMetadataColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output].ExternalColumns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="upload_notes" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[id]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[id]"
+                      name="id" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[roll_number]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[roll_number]"
+                      name="roll_number" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[marks]"
+                      dataType="i4"
+                      lineageId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Error Output].Columns[marks]"
+                      name="marks" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[5% selected]"
+              endId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Inputs[Derived Column Input]"
+              name="5% selected"
+              startId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Outputs[5% selected]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[95% unselected]"
+              endId="Package\Take Sample from Data Warehouse\Mark as Unselected.Inputs[Derived Column Input]"
+              name="95% unselected"
+              startId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Outputs[95% unselected]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Derived Column Output]"
+              endId="Package\Take Sample from Data Warehouse\Count random 3.Inputs[Row Count Input 1]"
+              name="Derived Column Output"
+              startId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Derived Column Output1]"
+              endId="Package\Take Sample from Data Warehouse\Count 5%.Inputs[Row Count Input 1]"
+              name="Derived Column Output"
+              startId="Package\Take Sample from Data Warehouse\Mark as 5% selected.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Derived Column Output2]"
+              endId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 2]"
+              name="Derived Column Output"
+              startId="Package\Take Sample from Data Warehouse\Mark as Unselected.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[OLE DB Source Output]"
+              endId="Package\Take Sample from Data Warehouse\Count records in source.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\Take Sample from Data Warehouse\Upload marks table from DW.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Row Count Output 1]"
+              endId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 4]"
+              name="Row Count Output 1"
+              startId="Package\Take Sample from Data Warehouse\Count random 3.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Row Count Output 11]"
+              endId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Inputs[Union All Input 1]"
+              name="Row Count Output 1"
+              startId="Package\Take Sample from Data Warehouse\Count 5%.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Row Count Output 12]"
+              endId="Package\Take Sample from Data Warehouse\Output to sample file.Inputs[Flat File Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\Take Sample from Data Warehouse\Count sample output.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Row Count Output 13]"
+              endId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Inputs[Row Sampling Input 1]"
+              name="Row Count Output 1"
+              startId="Package\Take Sample from Data Warehouse\Count records in source.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Selected Rows]"
+              endId="Package\Take Sample from Data Warehouse\Mark as random 3 selected.Inputs[Derived Column Input]"
+              name="Selected Rows"
+              startId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Selected Rows]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Sort Output]"
+              endId="Package\Take Sample from Data Warehouse\Count sample output.Inputs[Row Count Input 1]"
+              name="Sort Output"
+              startId="Package\Take Sample from Data Warehouse\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Union All Output 1]"
+              endId="Package\Take Sample from Data Warehouse\Sort.Inputs[Sort Input]"
+              name="Union All Output 1"
+              startId="Package\Take Sample from Data Warehouse\Combine sample with unselected.Outputs[Union All Output 1]" />
+            <path
+              refId="Package\Take Sample from Data Warehouse.Paths[Unselected Rows]"
+              endId="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows.Inputs[Percentage Sampling Input 1]"
+              name="Unselected Rows"
+              startId="Package\Take Sample from Data Warehouse\Sample 3 rRows.Outputs[Unselected Rows]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{95177CC2-0CEB-40E9-88C1-971490E6A8D4}"
+      DTS:From="Package\Take Sample from Data Warehouse"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Log completion" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="257.333333333334,42.6666666666667"
+          Id="Package\Log completion"
+          TopLeft="398.437494062818,143.00000269162" />
+        <NodeLayout
+          Size="257.333333333334,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse"
+          TopLeft="398.437494062818,58.8421063707146" />
+        <AnnotationLayout
+          Text="OLE DB Source&#xA;Row Sampling Task&#xA;Percentage Sampling Task&#xA;Derived Column Task&#xA;Union All Task&#xA;Sort Task&#xA;OLE DB Destination"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="166.666666666667,136"
+          Id="695dfb8e-0d82-46c5-ba55-330cd258a8dd"
+          TopLeft="83.7499987520278,65.0000012234638" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="527.104160729485,101.508773037381">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.491229654239"
+              Start="0,0"
+              End="0,33.991229654239">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.991229654239" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Take Sample from Data Warehouse">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Count 5%"
+          TopLeft="799.374988088384,363.005851464772" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Mark as Unselected"
+          TopLeft="516.708336993431,281.894736275448" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Output to sample file"
+          TopLeft="517.083333327125,499.035087010977" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Mark as random 3 selected"
+          TopLeft="235.333334152897,281.894736275448" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Sample 3 rRows"
+          TopLeft="517.083333327125,105.228069608781" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Mark as 5% selected"
+          TopLeft="801.458329089608,277.789473040282" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Sort"
+          TopLeft="517.083333327125,430.36842034431" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Count sample output"
+          TopLeft="801.249988060445,463.859653424248" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Count records in source"
+          TopLeft="803.749988023191,72.6315784322257" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Sample 5% of remaining rows"
+          TopLeft="659.416666238258,195.842104657865" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Count random 3"
+          TopLeft="236.249996479601,363.005851464772" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Combine sample with unselected"
+          TopLeft="517.083333327125,363.005851464772" />
+        <NodeLayout
+          Size="236.666666666667,42.6666666666667"
+          Id="Package\Take Sample from Data Warehouse\Upload marks table from DW"
+          TopLeft="517.083333327125,34.3333333333333" />
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Derived Column Output]"
+          TopLeft="354.124998649582,324.561402942115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.4444485226573"
+              Start="0,0"
+              End="0,30.9444485226573">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.9444485226573" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[95% unselected]"
+          TopLeft="739.63888846048,238.508771324532">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-104.597218133716,43.3859649509163"
+              Start="0,0"
+              End="-104.597218133716,35.8859649509163">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.5291923304765" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.5291923304765"
+                    Point2="0,17.5291923304765"
+                    Point3="-4,17.5291923304765" />
+                  <mssgle:LineSegment
+                    End="-100.597218133716,17.5291923304765" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-100.597218133716,17.5291923304765"
+                    Point2="-104.597218133716,17.5291923304765"
+                    Point3="-104.597218133716,21.5291923304765" />
+                  <mssgle:LineSegment
+                    End="-104.597218133716,35.8859649509163" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-88.2966754731077,22.5291923304765,71.9961328125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[5% selected]"
+          TopLeft="815.861110682702,238.508771324532">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="103.930551740238,39.2807017157502"
+              Start="0,0"
+              End="103.930551740238,31.7807017157502">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.8705465242147" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.8705465242147"
+                    Point2="0,15.8705465242147"
+                    Point3="4,15.8705465242147" />
+                  <mssgle:LineSegment
+                    End="99.9305517402385,15.8705465242147" />
+                  <mssgle:CubicBezierSegment
+                    Point1="99.9305517402385,15.8705465242147"
+                    Point2="103.930551740238,15.8705465242147"
+                    Point3="103.930551740238,19.8705465242147" />
+                  <mssgle:LineSegment
+                    End="103.930551740238,31.7807017157502" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="24.4163696201192,20.8705465242147,55.0978125,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Unselected Rows]"
+          TopLeft="673.52777777157,147.894736275448">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="104.222221800022,47.9473683824174"
+              Start="0,0"
+              End="104.222221800022,40.4473683824174">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.3721320493035" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.3721320493035"
+                    Point2="0,19.3721320493035"
+                    Point3="4,19.3721320493035" />
+                  <mssgle:LineSegment
+                    End="100.222221800022,19.3721320493035" />
+                  <mssgle:CubicBezierSegment
+                    Point1="100.222221800022,19.3721320493035"
+                    Point2="104.222221800022,19.3721320493035"
+                    Point3="104.222221800022,23.3721320493035" />
+                  <mssgle:LineSegment
+                    End="104.222221800022,40.4473683824174" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="14.1295874625109,24.3721320493035,75.963046875,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Union All Output 1]"
+          TopLeft="635.416666660458,405.672518131439">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,24.6959022128713"
+              Start="0,0"
+              End="0,17.1959022128713">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.1959022128713" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Sort Output]"
+          TopLeft="753.749999993792,451.701753677643">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="47.4999880666529,27.7134553021603"
+              Start="0,0"
+              End="39.9999880666529,27.7134553021603">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="23.4698726168595,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="23.4698726168595,0"
+                    Point2="27.4698726168595,0"
+                    Point3="27.4698726168595,4" />
+                  <mssgle:LineSegment
+                    End="27.4698726168595,23.7134553021603" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27.4698726168595,23.7134553021603"
+                    Point2="27.4698726168595,27.7134553021603"
+                    Point3="31.4698726168595,27.7134553021603" />
+                  <mssgle:LineSegment
+                    End="39.9999880666529,27.7134553021603" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Selected Rows]"
+          TopLeft="597.305555549347,147.894736275448">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-243.638888063117,134"
+              Start="0,0"
+              End="-243.638888063117,126.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,50.1398992725239" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,50.1398992725239"
+                    Point2="0,54.1398992725239"
+                    Point3="-4,54.1398992725239" />
+                  <mssgle:LineSegment
+                    End="-239.638888063117,54.1398992725239" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-239.638888063117,54.1398992725239"
+                    Point2="-243.638888063117,54.1398992725239"
+                    Point3="-243.638888063117,58.1398992725239" />
+                  <mssgle:LineSegment
+                    End="-243.638888063117,126.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-154.422686219058,59.1398992725239,65.206484375,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Row Count Output 13]"
+          TopLeft="803.749988023191,99.7426895433368">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-49.9999880293993,26.8187133987775"
+              Start="0,0"
+              End="-42.4999880293993,26.8187133987775">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-17.0843323015539,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-17.0843323015539,0"
+                    Point2="-21.0843323015539,0"
+                    Point3="-21.0843323015539,4" />
+                  <mssgle:LineSegment
+                    End="-21.0843323015539,22.8187133987775" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-21.0843323015539,22.8187133987775"
+                    Point2="-21.0843323015539,26.8187133987775"
+                    Point3="-25.0843323015539,26.8187133987775" />
+                  <mssgle:LineSegment
+                    End="-42.4999880293993,26.8187133987775" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Row Count Output 12]"
+          TopLeft="801.249988060445,490.970764535359">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-47.4999880666529,29.3976558089512"
+              Start="0,0"
+              End="-39.9999880666529,29.3976558089512">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-16.0301154497934,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-16.0301154497934,0"
+                    Point2="-20.0301154497934,0"
+                    Point3="-20.0301154497934,4" />
+                  <mssgle:LineSegment
+                    End="-20.0301154497934,25.3976558089512" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-20.0301154497934,25.3976558089512"
+                    Point2="-20.0301154497934,29.3976558089512"
+                    Point3="-24.0301154497934,29.3976558089512" />
+                  <mssgle:LineSegment
+                    End="-39.9999880666529,29.3976558089512" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Row Count Output 11]"
+          TopLeft="799.374988088384,384.339184798105">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-45.6249880945924,0"
+              Start="0,0"
+              End="-38.1249880945924,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-38.1249880945924,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Row Count Output 1]"
+          TopLeft="472.916663146268,384.339184798105">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="44.1666701808574,0"
+              Start="0,0"
+              End="36.6666701808574,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="36.6666701808574,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[OLE DB Source Output]"
+          TopLeft="753.749999993792,55.6666666666666">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="49.9999880293993,32.5204673211146"
+              Start="0,0"
+              End="42.4999880293993,32.5204673211146">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="24.9156557278454,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="24.9156557278454,0"
+                    Point2="28.9156557278454,0"
+                    Point3="28.9156557278454,4" />
+                  <mssgle:LineSegment
+                    End="28.9156557278454,28.5204673211146" />
+                  <mssgle:CubicBezierSegment
+                    Point1="28.9156557278454,28.5204673211146"
+                    Point2="28.9156557278454,32.5204673211146"
+                    Point3="32.9156557278454,32.5204673211146" />
+                  <mssgle:LineSegment
+                    End="42.4999880293993,32.5204673211146" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Derived Column Output1]"
+          TopLeft="918.749991922329,320.456139706949">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,42.5497117578234"
+              Start="0,0"
+              End="0,35.0497117578234">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.0497117578234" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Take Sample from Data Warehouse.Paths[Derived Column Output2]"
+          TopLeft="635.229168493612,324.561402942115">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.4444485226573"
+              Start="0,0"
+              End="0,30.9444485226573">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.9444485226573" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Take Sample from Data Warehouse\Upload marks table from DW">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

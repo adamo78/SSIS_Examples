@@ -1,0 +1,2046 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/3/2022 12:13:26 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ADAM-DELL"
+  DTS:CreatorName="ADAM-DELL\adamo"
+  DTS:DTSID="{6ADF30D7-09C9-41FA-AFE4-1122EC4A4F50}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.2000.180"
+  DTS:LocaleID="2057"
+  DTS:ObjectName="01_Basic_Transforms"
+  DTS:PackageType="5"
+  DTS:VersionBuild="42"
+  DTS:VersionGUID="{2F7CA12F-19EC-4EA7-BA0A-E5EDE2EA4FCA}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Example_Data1_csv_input]"
+      DTS:CreationName="FLATFILE"
+      DTS:DTSID="{2604D2D9-571D-4A1B-B737-8B9ECD5EF475}"
+      DTS:ObjectName="Example_Data1_csv_input">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:Format="Delimited"
+          DTS:LocaleID="2057"
+          DTS:HeaderRowDelimiter="_x000D__x000A_"
+          DTS:ColumnNamesInFirstDataRow="True"
+          DTS:RowDelimiter=""
+          DTS:TextQualifier="_x003C_none_x003E_"
+          DTS:CodePage="1252"
+          DTS:ConnectionString="C:\Adam\ETL\Sample Data\Clean\Example_Data1.csv">
+          <DTS:FlatFileColumns>
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x002C_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="roll_number"
+              DTS:DTSID="{649BB4BA-526C-4A6B-92CB-17E087D72D17}"
+              DTS:CreationName="" />
+            <DTS:FlatFileColumn
+              DTS:ColumnType="Delimited"
+              DTS:ColumnDelimiter="_x000D__x000A_"
+              DTS:MaximumWidth="50"
+              DTS:DataType="129"
+              DTS:TextQualified="True"
+              DTS:ObjectName="marks"
+              DTS:DTSID="{19492657-0F09-43F9-A3BA-F1BB11EE1F6F}"
+              DTS:CreationName="" />
+          </DTS:FlatFileColumns>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B21C66CA-5A4F-4DD7-AF82-3A18336C89A1}"
+      DTS:ObjectName="LocalHost.SampleWarehouse">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=SampleWarehouse;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SMTP Connection Manager]"
+      DTS:CreationName="SMTP"
+      DTS:DTSID="{0D281D15-F9C2-419F-A90E-15F42A568680}"
+      DTS:ObjectName="SMTP Connection Manager">
+      <DTS:ObjectData>
+        <SmtpConnectionManager
+          ConnectionString="SmtpServer=smtp-mail.outlook.com;UseWindowsAuthentication=True;EnableSsl=False;Timeout=30000;"
+          ConnectByProxy="False" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{BE80B659-E967-4746-9721-B1442BDC67E8}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Detentions">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{664BCEF7-FCCC-40D7-B98F-09576A42C031}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsInSource">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D634041E-4C88-4A33-9B04-10031D7C8060}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsUpdated">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B34DC757-D4AF-41A0-9A0D-DD05927BAEAC}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RecordsUploaded">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{7F136887-44CD-477A-B9D2-AC69EA117B78}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ReSits">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D045A559-E3D1-4158-9CF8-255729B63546}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Uncommented">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Log completion"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{9F0E4B04-725E-4F45-A9AF-F85FC8EC863D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Log completion"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B21C66CA-5A4F-4DD7-AF82-3A18336C89A1}"
+          SQLTask:SqlStatementSource="INSERT INTO [audit].[SSISlog] ([step_ref], [step_desc], [records_affected]) &#xA;VALUES &#xA;&#x9;('1.1','Records In Source',?),&#xA;&#x9;('1.2','Re-sits',?),&#xA;&#x9;('1.3','Detentions',?),&#xA;&#x9;('1.4','Uncommented',?),&#xA;&#x9;('1.5','Records Uploaded',?),&#xA;&#x9;('1.6','Records Updated',?),&#xA;&#x9;('1.7','Complete',null);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="0"
+            SQLTask:DtsVariableName="User::RecordsInSource"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="1"
+            SQLTask:DtsVariableName="User::ReSits"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="2"
+            SQLTask:DtsVariableName="User::Detentions"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="3"
+            SQLTask:DtsVariableName="User::Uncommented"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="4"
+            SQLTask:DtsVariableName="User::RecordsUploaded"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="5"
+            SQLTask:DtsVariableName="User::RecordsUpdated"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="3"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Update a records in marks table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{fe74891d-5f25-42a1-bdf2-2ec1214cdd42}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Update a records in marks table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2019; © 2019 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B21C66CA-5A4F-4DD7-AF82-3A18336C89A1}"
+          SQLTask:TimeOut="30"
+          SQLTask:SqlStatementSource="UPDATE [datamart].[marks] &#xA;SET [marks] = 88 &#xA;WHERE [roll_number] = '1234';&#xA;SELECT @@ROWCOUNT as RecordsUpdated;"
+          SQLTask:ResultType="ResultSetType_SingleRow" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ResultBinding
+            SQLTask:ResultName="RecordsUpdated"
+            SQLTask:DtsVariableName="User::RecordsUpdated" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Upload Example_Data1 csv to DW"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{eeed0105-8393-460b-bb12-bcef376e391c}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Upload Example_Data1 csv to DW"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Add detention comment"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Add detention comment"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Add detention comment.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Add detention comment.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Output].Columns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="9"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Output].Columns[comments]"
+                      name="comments"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,9,1252)"detention"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,9,1252)"detention"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Add detention comment.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Add re-sit comment"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Add re-sit comment"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Output].Columns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="6"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Output].Columns[comments]"
+                      name="comments"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_STR,6,1252)"re-sit"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_STR,6,1252)"re-sit"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Convert strings to integers"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Inputs[Data Conversion Input].Columns[roll_number]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="roll_number"
+                      lineageId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[roll_number]" />
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Inputs[Data Conversion Input].Columns[marks]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="marks"
+                      lineageId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[marks]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_number_converted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_number_converted]"
+                      name="roll_number_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[roll_number]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]"
+                      name="marks_converted"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[marks]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Count detentions"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count detentions">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::Detentions</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Count detentions.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Count detentions.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Count detentions.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Count null comments"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count null comments">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::Uncommented</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Count null comments.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Count null comments.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Count null comments.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Count re-sits"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count re-sits">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::ReSits</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Count re-sits.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Count re-sits.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Count re-sits.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Count records in source"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count records in source">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordsInSource</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Count records in source.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Count records in source.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Count records in source.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Count records uploaded"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Count records uploaded">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RecordsUploaded</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Count records uploaded.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Count records uploaded.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Count records uploaded.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\CSV scores upload"
+              componentClassID="Microsoft.FlatFileSource"
+              contactInfo="Flat File Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Flat File Source"
+              localeId="2057"
+              name="CSV scores upload"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether zero-length columns are treated as null."
+                  name="RetainNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of an output column containing the file name. If no name is specified, no output column containing the file name will be generated."
+                  name="FileNameColumnName"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Connections[FlatFileConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Example_Data1_csv_input]"
+                  connectionManagerRefId="Package.ConnectionManagers[Example_Data1_csv_input]"
+                  name="FlatFileConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output]"
+                  name="Flat File Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[roll_number]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].ExternalColumns[roll_number]"
+                      length="50"
+                      lineageId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[roll_number]"
+                      name="roll_number"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[marks]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].ExternalColumns[marks]"
+                      length="50"
+                      lineageId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].Columns[marks]"
+                      name="marks"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the data is in binary format."
+                          name="UseBinaryFormat">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].ExternalColumns[roll_number]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="roll_number" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output].ExternalColumns[marks]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="marks" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Error Output]"
+                  isErrorOut="true"
+                  name="Flat File Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      codePage="1252"
+                      dataType="text"
+                      description="Flat File Source Error Output Column"
+                      lineageId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Error Output].Columns[Flat File Source Error Output Column]"
+                      name="Flat File Source Error Output Column" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Sort by roll number"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort by roll number"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Inputs[Sort Input].Columns[roll_number_converted]"
+                      cachedDataType="i4"
+                      cachedName="roll_number_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[roll_number_converted]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Inputs[Sort Input].Columns[marks_converted]"
+                      cachedDataType="i4"
+                      cachedName="marks_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[marks_converted]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Inputs[Sort Input].Columns[comments]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="comments"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[comments]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[roll_number_converted]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[roll_number_converted]"
+                      name="roll_number_converted"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[roll_number_converted]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[marks_converted]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[marks_converted]"
+                      name="marks_converted">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[marks_converted]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[comments]"
+                      name="comments">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[comments]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Split for comments"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="Conditional Split;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Routes data rows to different outputs depending on the content of the data. Use conditions (SSIS expressions) to specify which rows are routed. For example, separate records that need to be cleaned from those that are ready to be loaded or route only a subset of records."
+              name="Split for comments"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Split for comments.Inputs[Conditional Split Input]"
+                  description="Input to the Conditional Split Transformation"
+                  name="Conditional Split Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Split for comments.Inputs[Conditional Split Input].Columns[marks_converted]"
+                      cachedDataType="i4"
+                      cachedName="marks_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[detention]"
+                  description="Output 1 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="detention"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Split for comments.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">#{Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]} &lt;= 50</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">marks_converted &lt;= 50</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[re-sit]"
+                  description="Output 2 of the Conditional Split Transformation"
+                  errorOrTruncationOperation="Computation"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="re-sit"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Split for comments.Inputs[Conditional Split Input]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the expression. This expression version uses lineage identifiers instead of column names."
+                      name="Expression">#{Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]} &lt;= 60 &amp;&amp; #{Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]} &gt; 50</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Specifies the friendly version of the expression. This expression version uses column names."
+                      expressionType="Notify"
+                      name="FriendlyExpression">marks_converted &lt;= 60 &amp;&amp; marks_converted &gt; 50</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the position of the condition in the list of conditions that the transformation evaluates. The evaluation order is from the lowest to the highest value."
+                      name="EvaluationOrder">1</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[null comment]"
+                  description="Default Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  name="null comment"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Split for comments.Inputs[Conditional Split Input]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[Conditional Split Error Output]"
+                  description="Error Output of the Conditional Split Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Conditional Split Error Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Split for comments.Inputs[Conditional Split Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[Conditional Split Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[Conditional Split Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Union data back together"
+              componentClassID="Microsoft.UnionAll"
+              contactInfo="Union All;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combines rows from multiple data flows without sorting. For example, add rows back to a data flow after correction of errors. If sorting is important, we recommend using the Merge transformation."
+              name="Union data back together"
+              version="1">
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 4]"
+                  hasSideEffects="true"
+                  name="Union All Input 4">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 4].Columns[roll_number_converted]"
+                      cachedDataType="i4"
+                      cachedName="roll_number_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_number_converted]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[roll_number_converted]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 4].Columns[marks_converted]"
+                      cachedDataType="i4"
+                      cachedName="marks_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[marks_converted]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 4].Columns[comments]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="6"
+                      cachedName="comments"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Output].Columns[comments]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[comments]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 1]"
+                  hasSideEffects="true"
+                  name="Union All Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 1].Columns[roll_number_converted]"
+                      cachedDataType="i4"
+                      cachedName="roll_number_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_number_converted]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[roll_number_converted]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 1].Columns[marks_converted]"
+                      cachedDataType="i4"
+                      cachedName="marks_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[marks_converted]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 2]"
+                  hasSideEffects="true"
+                  name="Union All Input 2">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 2].Columns[roll_number_converted]"
+                      cachedDataType="i4"
+                      cachedName="roll_number_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[roll_number_converted]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[roll_number_converted]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 2].Columns[marks_converted]"
+                      cachedDataType="i4"
+                      cachedName="marks_converted"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output].Columns[marks_converted]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[marks_converted]}</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 2].Columns[comments]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="comments"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Output].Columns[comments]">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Output column lineage ID"
+                          name="OutputColumnLineageID">#{Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[comments]}</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 3]"
+                  dangling="true"
+                  hasSideEffects="true"
+                  name="Union All Input 3">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1]"
+                  name="Union All Output 1">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[roll_number_converted]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[roll_number_converted]"
+                      name="roll_number_converted" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[marks_converted]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[marks_converted]"
+                      name="marks_converted" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      length="9"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1].Columns[comments]"
+                      name="comments" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Upload Example_Data1 csv to DW\Upload to DW"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Upload to DW"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[datamart].[marks]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.SampleWarehouse]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].Columns[roll_number_converted]"
+                      cachedDataType="i4"
+                      cachedName="roll_number_converted"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[roll_number]"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[roll_number_converted]" />
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].Columns[marks_converted]"
+                      cachedDataType="i4"
+                      cachedName="marks_converted"
+                      externalMetadataColumnId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[marks]"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[marks_converted]" />
+                    <inputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].Columns[comments]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="9"
+                      cachedName="comments"
+                      externalMetadataColumnId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[comments]"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output].Columns[comments]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[id]"
+                      dataType="i4"
+                      name="id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[roll_number]"
+                      dataType="i4"
+                      name="roll_number" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[marks]"
+                      dataType="i4"
+                      name="marks" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[created_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="created_by" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[created_on]"
+                      dataType="dbTimeStamp"
+                      name="created_on" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[changed_by]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      name="changed_by" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[changed_on]"
+                      dataType="dbTimeStamp"
+                      name="changed_on" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[comments]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="comments" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[teams_id]"
+                      dataType="i4"
+                      name="teams_id" />
+                    <externalMetadataColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input].ExternalColumns[upload_notes]"
+                      codePage="1252"
+                      dataType="str"
+                      length="100"
+                      name="upload_notes" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Upload Example_Data1 csv to DW\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Upload Example_Data1 csv to DW\Upload to DW.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Data Conversion Output]"
+              endId="Package\Upload Example_Data1 csv to DW\Split for comments.Inputs[Conditional Split Input]"
+              name="Data Conversion Output"
+              startId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Derived Column Output]"
+              endId="Package\Upload Example_Data1 csv to DW\Count re-sits.Inputs[Row Count Input 1]"
+              name="Derived Column Output"
+              startId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Derived Column Output1]"
+              endId="Package\Upload Example_Data1 csv to DW\Count detentions.Inputs[Row Count Input 1]"
+              name="Derived Column Output"
+              startId="Package\Upload Example_Data1 csv to DW\Add detention comment.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[detention]"
+              endId="Package\Upload Example_Data1 csv to DW\Add detention comment.Inputs[Derived Column Input]"
+              name="detention"
+              startId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[detention]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Flat File Source Output]"
+              endId="Package\Upload Example_Data1 csv to DW\Count records in source.Inputs[Row Count Input 1]"
+              name="Flat File Source Output"
+              startId="Package\Upload Example_Data1 csv to DW\CSV scores upload.Outputs[Flat File Source Output]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[null comment]"
+              endId="Package\Upload Example_Data1 csv to DW\Count null comments.Inputs[Row Count Input 1]"
+              name="null comment"
+              startId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[null comment]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[re-sit]"
+              endId="Package\Upload Example_Data1 csv to DW\Add re-sit comment.Inputs[Derived Column Input]"
+              name="re-sit"
+              startId="Package\Upload Example_Data1 csv to DW\Split for comments.Outputs[re-sit]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 1]"
+              endId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 4]"
+              name="Row Count Output 1"
+              startId="Package\Upload Example_Data1 csv to DW\Count re-sits.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 11]"
+              endId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 1]"
+              name="Row Count Output 1"
+              startId="Package\Upload Example_Data1 csv to DW\Count null comments.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 12]"
+              endId="Package\Upload Example_Data1 csv to DW\Union data back together.Inputs[Union All Input 2]"
+              name="Row Count Output 1"
+              startId="Package\Upload Example_Data1 csv to DW\Count detentions.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 13]"
+              endId="Package\Upload Example_Data1 csv to DW\Upload to DW.Inputs[OLE DB Destination Input]"
+              name="Row Count Output 1"
+              startId="Package\Upload Example_Data1 csv to DW\Count records uploaded.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 14]"
+              endId="Package\Upload Example_Data1 csv to DW\Convert strings to integers.Inputs[Data Conversion Input]"
+              name="Row Count Output 1"
+              startId="Package\Upload Example_Data1 csv to DW\Count records in source.Outputs[Row Count Output 1]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Sort Output]"
+              endId="Package\Upload Example_Data1 csv to DW\Count records uploaded.Inputs[Row Count Input 1]"
+              name="Sort Output"
+              startId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Outputs[Sort Output]" />
+            <path
+              refId="Package\Upload Example_Data1 csv to DW.Paths[Union All Output 1]"
+              endId="Package\Upload Example_Data1 csv to DW\Sort by roll number.Inputs[Sort Input]"
+              name="Union All Output 1"
+              startId="Package\Upload Example_Data1 csv to DW\Union data back together.Outputs[Union All Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C9BA58F8-0F5A-4098-B16C-4F1FA878DB4B}"
+      DTS:From="Package\Upload Example_Data1 csv to DW"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Update a records in marks table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5EA04DF5-5DA4-44EA-BB3E-9ABC7F181CCD}"
+      DTS:From="Package\Update a records in marks table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Log completion" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="244,42.6666666666667"
+          Id="Package\Log completion"
+          TopLeft="411.041660541669,249.052636266746" />
+        <NodeLayout
+          Size="244,42.6666666666667"
+          Id="Package\Update a records in marks table"
+          TopLeft="410.416660550982,163.305851108607" />
+        <NodeLayout
+          Size="244,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW"
+          TopLeft="411.041660541669,76.1906448720813" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="532.729160546326,118.857311538748">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.4485395698594"
+              Start="0,0"
+              End="0,36.9485395698594">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.9485395698594" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="532.729160546326,205.972517775274">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.080118491472"
+              Start="0,0"
+              End="0,35.580118491472">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.580118491472" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Flat File Data Source&#xA;Row Count&#xA;Data Conversion&#xA;Conditional Split&#xA;Derived Column&#xA;Union All&#xA;Sort&#xA;OLE DB Destination&#xA;Execute SQL Task"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="136,167.333333333334"
+          Id="1977d00a-206d-45ed-afad-bc4eca5cabca"
+          TopLeft="77.4999988451601,68.4210539194355" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Upload Example_Data1 csv to DW">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Count re-sits"
+          TopLeft="318.124995259568,334.57895366604" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Count detentions"
+          TopLeft="787.499988265336,334.57895366604" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Union data back together"
+          TopLeft="553.333331216127,410.312196360275" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Split for comments"
+          TopLeft="553.333331216127,157.008561531063" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Upload to DW"
+          TopLeft="553.333331216127,554.251460757757" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Convert strings to integers"
+          TopLeft="553.333331216127,85.0389293323228" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\CSV scores upload"
+          TopLeft="553.333331216127,13.0692971335821" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Count records uploaded"
+          TopLeft="787.499988265336,516.578957091739" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Add re-sit comment"
+          TopLeft="405.833333333333,247.296343162508" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Count records in source"
+          TopLeft="787.499988265336,46.5263166652162" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Sort by roll number"
+          TopLeft="553.333331216127,482.281828559016" />
+        <NodeLayout
+          Size="204,42"
+          Id="Package\Upload Example_Data1 csv to DW\Add detention comment"
+          TopLeft="695.833333333333,247.629676495841" />
+        <NodeLayout
+          Size="204,42.6666666666667"
+          Id="Package\Upload Example_Data1 csv to DW\Count null comments"
+          TopLeft="553.333331216127,334.57895366604" />
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Union All Output 1]"
+          TopLeft="655.333331216127,452.978863026942">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.3029655320743"
+              Start="0,0"
+              End="0,21.8029655320743">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.8029655320743" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Sort Output]"
+          TopLeft="757.333331216127,503.61516189235">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30.166657049209,28.5193507549445"
+              Start="0,0"
+              End="22.666657049209,28.5193507549445">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="13.4457775706269,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.4457775706269,0"
+                    Point2="17.4457775706269,0"
+                    Point3="17.4457775706269,4" />
+                  <mssgle:LineSegment
+                    End="17.4457775706269,24.5193507549445" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.4457775706269,24.5193507549445"
+                    Point2="17.4457775706269,28.5193507549445"
+                    Point3="21.4457775706269,28.5193507549445" />
+                  <mssgle:LineSegment
+                    End="22.666657049209,28.5193507549445" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 14]"
+          TopLeft="787.499988265336,73.6374277763273">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-30.166657049209,32.7348348893289"
+              Start="0,0"
+              End="-22.666657049209,32.7348348893289">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-8.72087947858211,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.72087947858211,0"
+                    Point2="-12.7208794785821,0"
+                    Point3="-12.7208794785821,4" />
+                  <mssgle:LineSegment
+                    End="-12.7208794785821,28.7348348893289" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.7208794785821,28.7348348893289"
+                    Point2="-12.7208794785821,32.7348348893289"
+                    Point3="-16.7208794785821,32.7348348893289" />
+                  <mssgle:LineSegment
+                    End="-22.666657049209,32.7348348893289" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 13]"
+          TopLeft="787.499988265336,543.69006820285">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-30.166657049209,31.8947258882407"
+              Start="0,0"
+              End="-22.666657049209,31.8947258882407">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-8.72087947858214,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.72087947858214,0"
+                    Point2="-12.7208794785821,0"
+                    Point3="-12.7208794785821,4" />
+                  <mssgle:LineSegment
+                    End="-12.7208794785821,27.8947258882407" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-12.7208794785821,27.8947258882407"
+                    Point2="-12.7208794785821,31.8947258882407"
+                    Point3="-16.7208794785821,31.8947258882407" />
+                  <mssgle:LineSegment
+                    End="-22.666657049209,31.8947258882407" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 12]"
+          TopLeft="889.499988265336,377.245620332707">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-185.166657049209,33.0665760275687"
+              Start="0,0"
+              End="-185.166657049209,25.5665760275687">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.7599403536258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.7599403536258"
+                    Point2="0,21.7599403536258"
+                    Point3="-4,21.7599403536258" />
+                  <mssgle:LineSegment
+                    End="-181.166657049209,21.7599403536258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-181.166657049209,21.7599403536258"
+                    Point2="-185.166657049209,21.7599403536258"
+                    Point3="-185.166657049209,25.7599403536258" />
+                  <mssgle:LineSegment
+                    End="-185.166657049209,25.5665760275687" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 11]"
+          TopLeft="655.333331216127,377.245620332707">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.0665760275687"
+              Start="0,0"
+              End="0,25.5665760275687">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5665760275687" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Row Count Output 1]"
+          TopLeft="420.124995259568,377.245620332707">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="186.208335956559,33.0665760275687"
+              Start="0,0"
+              End="186.208335956559,25.5665760275687">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.7599403536258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.7599403536258"
+                    Point2="0,21.7599403536258"
+                    Point3="4,21.7599403536258" />
+                  <mssgle:LineSegment
+                    End="182.208335956559,21.7599403536258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="182.208335956559,21.7599403536258"
+                    Point2="186.208335956559,21.7599403536258"
+                    Point3="186.208335956559,25.7599403536258" />
+                  <mssgle:LineSegment
+                    End="186.208335956559,25.5665760275687" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[re-sit]"
+          TopLeft="606.333331216127,199.67522819773">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-98.4999978827938,47.6211149647783"
+              Start="0,0"
+              End="-98.4999978827938,40.1211149647783">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.2833489879565" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.2833489879565"
+                    Point2="0,16.2833489879565"
+                    Point3="-4,16.2833489879565" />
+                  <mssgle:LineSegment
+                    End="-94.4999978827938,16.2833489879565" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-94.4999978827938,16.2833489879565"
+                    Point2="-98.4999978827938,16.2833489879565"
+                    Point3="-98.4999978827938,20.2833489879565" />
+                  <mssgle:LineSegment
+                    End="-98.4999978827938,40.1211149647783" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-61.2030067538969,21.2833489879565,23.906015625,9.451171875"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[null comment]"
+          TopLeft="655.333331216127,199.67522819773">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,134.90372546831"
+              Start="0,0"
+              End="0,127.40372546831">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,127.40372546831" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-30.6080078125,58.827351015405,61.216015625,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Flat File Source Output]"
+          TopLeft="757.333331216127,34.4026304669154">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="30.166657049209,27.6792417538563"
+              Start="0,0"
+              End="22.666657049209,27.6792417538563">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="13.4457775706269,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="13.4457775706269,0"
+                    Point2="17.4457775706269,0"
+                    Point3="17.4457775706269,4" />
+                  <mssgle:LineSegment
+                    End="17.4457775706269,23.6792417538563" />
+                  <mssgle:CubicBezierSegment
+                    Point1="17.4457775706269,23.6792417538563"
+                    Point2="17.4457775706269,27.6792417538563"
+                    Point3="21.4457775706269,27.6792417538563" />
+                  <mssgle:LineSegment
+                    End="22.666657049209,27.6792417538563" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[detention]"
+          TopLeft="704.333331216127,199.67522819773">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="93.5000021172062,47.9544482981113"
+              Start="0,0"
+              End="93.5000021172062,40.4544482981113">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.39732748258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.39732748258"
+                    Point2="0,16.39732748258"
+                    Point3="4,16.39732748258" />
+                  <mssgle:LineSegment
+                    End="89.5000021172062,16.39732748258" />
+                  <mssgle:CubicBezierSegment
+                    Point1="89.5000021172062,16.39732748258"
+                    Point2="93.5000021172062,16.39732748258"
+                    Point3="93.5000021172062,20.39732748258" />
+                  <mssgle:LineSegment
+                    End="93.5000021172062,40.4544482981113" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="25.4034580898531,21.39732748258,42.6930859375,9.7490234375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Derived Column Output1]"
+          TopLeft="797.833333333333,289.629676495841">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="91.6666549320028,44.9492771701989"
+              Start="0,0"
+              End="91.6666549320028,37.4492771701989">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.4746385850995" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.4746385850995"
+                    Point2="0,22.4746385850995"
+                    Point3="4,22.4746385850995" />
+                  <mssgle:LineSegment
+                    End="87.6666549320028,22.4746385850995" />
+                  <mssgle:CubicBezierSegment
+                    Point1="87.6666549320028,22.4746385850995"
+                    Point2="91.6666549320028,22.4746385850995"
+                    Point3="91.6666549320028,26.4746385850995" />
+                  <mssgle:LineSegment
+                    End="91.6666549320028,37.4492771701989" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Derived Column Output]"
+          TopLeft="507.833333333333,289.963009829175">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-87.7083380737648,44.6159438368653"
+              Start="0,0"
+              End="-87.7083380737648,37.1159438368653">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,18.3079719184326" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,18.3079719184326"
+                    Point2="0,22.3079719184326"
+                    Point3="-4,22.3079719184326" />
+                  <mssgle:LineSegment
+                    End="-83.7083380737648,22.3079719184326" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-83.7083380737648,22.3079719184326"
+                    Point2="-87.7083380737648,22.3079719184326"
+                    Point3="-87.7083380737648,26.3079719184326" />
+                  <mssgle:LineSegment
+                    End="-87.7083380737648,37.1159438368653" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Upload Example_Data1 csv to DW.Paths[Data Conversion Output]"
+          TopLeft="655.333331216127,127.705595998989">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29.3029655320736"
+              Start="0,0"
+              End="0,21.8029655320736">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.8029655320736" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Upload Example_Data1 csv to DW\Upload to DW">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
